@@ -2,7 +2,9 @@ package WeatherWearsYou.external;
 
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +15,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class KmaClient {
 
     public LinkedHashMap getMiddleLandWeather() throws UnsupportedEncodingException {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
         WebClient webClient = WebClient.builder()
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .build();
@@ -24,10 +29,10 @@ public class KmaClient {
                         .path("/1360000/MidFcstInfoService/getMidTa")
                         .queryParam("serviceKey",
                                 "rm1FBKWt03J9o1QIzMbcQ8LcKOuxPDgITzdTd9NoXdslz1L8FF916FbILfYsbJmqkr0bJJHrRj3tHQe1DL/ecg==")
-                        .queryParam("regId", "11B00000")
+                        .queryParam("regId", "11B10101")
                         .queryParam("tmFc", "202305010600")
                         .queryParam("pageNo", "1")
-                        .queryParam("numOfRows", "5")
+                        .queryParam("numOfRows", "10")
                         .queryParam("dataType", "JSON")
                         .build()
                         .toUriString())
