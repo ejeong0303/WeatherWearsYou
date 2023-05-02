@@ -13,7 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 public class KmaClientVilageFcst {
 
-    public LinkedHashMap getVilageLandWeather() throws UnsupportedEncodingException {
+    public ArrayList<LinkedHashMap> getVilageLandWeather() throws UnsupportedEncodingException {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
@@ -25,7 +25,7 @@ public class KmaClientVilageFcst {
                 .uri(UriComponentsBuilder.newInstance()
                         .scheme("https")
                         .host("apis.data.go.kr")
-                        .path("/1360000/MidFcstInfoService/VilageFcstInfoService_2.0/getVilageFcst")
+                        .path("1360000/VilageFcstInfoService_2.0/getVilageFcst")
                         .queryParam("serviceKey",
                                 "rm1FBKWt03J9o1QIzMbcQ8LcKOuxPDgITzdTd9NoXdslz1L8FF916FbILfYsbJmqkr0bJJHrRj3tHQe1DL/ecg==")
                         .queryParam("pageNo", "1")
@@ -42,8 +42,26 @@ public class KmaClientVilageFcst {
                 .bodyToMono(HashMap.class)
                 .block();
 
-        LinkedHashMap itemMap = (LinkedHashMap) ((ArrayList)((LinkedHashMap)((LinkedHashMap)((LinkedHashMap) result.get("response")).get("body")).get("items")).get("item")).get(0);
+        LinkedHashMap response = (LinkedHashMap) result.get("response");
+        if (response == null) {
+            throw new RuntimeException("Response object is missing in the API response");
+        }
 
-        return itemMap;
+        LinkedHashMap body = (LinkedHashMap) response.get("body");
+        if (body == null) {
+            throw new RuntimeException("Body object is missing in the API response");
+        }
+
+        LinkedHashMap items = (LinkedHashMap) body.get("items");
+        if (items == null) {
+            throw new RuntimeException("Body object is missing in the API response");
+        }
+
+        ArrayList<LinkedHashMap> itemList = (ArrayList<LinkedHashMap>) items.get("item"); // Updated itemList type
+        if (itemList == null || itemList.isEmpty()) {
+            throw new RuntimeException("Item list is missing or empty in the API response");
+        }
+
+        return itemList; // Return the entire itemList
     }
 }
