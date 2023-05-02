@@ -6,18 +6,18 @@ import java.util.LinkedHashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class KmaClientTest {
+class KmaClientVilageFcstTest {
 
-    KmaClientMidTemp kmaClientMidTemp;
+    KmaClientVilageFcst kmaClientVilageFcst;
 
     @BeforeEach
     public void init() {
-        kmaClientMidTemp = new KmaClientMidTemp();
+        kmaClientVilageFcst = new KmaClientVilageFcst();
     }
 
     @Test
-    void getMiddleLandWeather2() throws UnsupportedEncodingException {
-        LinkedHashMap weather = kmaClientMidTemp.getMiddleLandWeather2();
+    void getVilageLandWeather() throws UnsupportedEncodingException {
+        LinkedHashMap weather = kmaClientVilageFcst.getVilageLandWeather();
         System.out.println(weather);
     }
 }

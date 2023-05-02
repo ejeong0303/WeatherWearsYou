@@ -1,6 +1,5 @@
 package WeatherWearsYou.external;
 
-
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,9 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
-public class KmaClient {
+public class KmaClientMidWeather {
 
-    public LinkedHashMap getMiddleLandWeather() throws UnsupportedEncodingException {
+    public LinkedHashMap getMiddleLandWeather1() throws UnsupportedEncodingException {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
@@ -26,11 +25,11 @@ public class KmaClient {
                 .uri(UriComponentsBuilder.newInstance()
                         .scheme("https")
                         .host("apis.data.go.kr")
-                        .path("/1360000/MidFcstInfoService/getMidTa")
+                        .path("/1360000/MidFcstInfoService/getMidLandFcst")
                         .queryParam("serviceKey",
                                 "rm1FBKWt03J9o1QIzMbcQ8LcKOuxPDgITzdTd9NoXdslz1L8FF916FbILfYsbJmqkr0bJJHrRj3tHQe1DL/ecg==")
-                        .queryParam("regId", "11B10101")
-                        .queryParam("tmFc", "202305010600")
+                        .queryParam("regId", "11B00000")
+                        .queryParam("tmFc", sdf.format(date) + "0600")
                         .queryParam("pageNo", "1")
                         .queryParam("numOfRows", "10")
                         .queryParam("dataType", "JSON")
