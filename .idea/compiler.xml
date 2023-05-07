@@ -2,7 +2,6 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="true" />
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
@@ -11,9 +10,6 @@
         <module name="WeatherWearsYou.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="WeatherWearsYou.WeatherWearsYou.main~1" target="16" />
-      <module name="WeatherWearsYou.WeatherWearsYou.test~1" target="16" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="16" />
   </component>
 </project>

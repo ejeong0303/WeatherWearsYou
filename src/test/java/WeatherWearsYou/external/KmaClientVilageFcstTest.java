@@ -1,24 +1,28 @@
 package WeatherWearsYou.external;
 
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+public class KmaClientVilageFcstTest {
 
-class KmaClientVilageFcstTest {
+    public static void main(String[] args) {
+        KmaClientVilageFcst kmaClient = new KmaClientVilageFcst();
+        String cityName = "Gangwondo";
+        String targetDate = "20230508"; // Replace with your target date in "yyyyMMdd" format
 
-    KmaClientVilageFcst kmaClientVilageFcst;
-
-    @BeforeEach
-    public void init() {
-        kmaClientVilageFcst = new KmaClientVilageFcst();
-    }
-
-    @Test
-    void getVilageLandWeather() throws UnsupportedEncodingException {
-        ArrayList<LinkedHashMap> weather = kmaClientVilageFcst.getVilageLandWeather();
-        System.out.println(weather);
+        try {
+            System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
+            LinkedHashMap<String, Object> weatherData = kmaClient.getWeatherForSpecificDate(cityName, targetDate);
+            System.out.println("Weather data for " + cityName + " in " + targetDate + ":");
+            System.out.println("Minimum Temperature: " + weatherData.get("minTemp"));
+            System.out.println("Maximum Temperature: " + weatherData.get("maxTemp"));
+            System.out.println("Precipitation Rate: " + weatherData.get("precipitationRate"));
+            System.out.println("Weather: " + weatherData.get("weather"));
+        } catch (UnsupportedEncodingException | ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
