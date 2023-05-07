@@ -35,7 +35,7 @@ public class KmaClientVilageFcst {
 
         return cityToNxNy.getOrDefault(cityName, new Integer[]{60, 127}); // Default to 서울특별시 if city not found
     }
-    public ArrayList<LinkedHashMap> getVilageLandWeather(String cityName) throws UnsupportedEncodingException {
+    private ArrayList<LinkedHashMap> getVilageLandWeather(String cityName) throws UnsupportedEncodingException {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
@@ -100,7 +100,7 @@ public class KmaClientVilageFcst {
                 return "";
         }
     }
-    public LinkedHashMap<String, Object> getWeatherForSpecificDate(String cityName, String targetDate) throws UnsupportedEncodingException, ParseException {
+    LinkedHashMap<String, Object> getWeatherForSpecificDate(String cityName, String targetDate) throws UnsupportedEncodingException, ParseException {
         ArrayList<LinkedHashMap> itemList = getVilageLandWeather(cityName);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 

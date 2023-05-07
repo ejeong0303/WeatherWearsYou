@@ -37,7 +37,7 @@ public class KmaClientMidTemp {
         return cityToRegId.getOrDefault(cityName, "11B10101"); // Default to 서울특별시 if city not found
     }
 
-    public LinkedHashMap getMiddleLandTempData(String cityName) throws UnsupportedEncodingException {
+    private LinkedHashMap getMiddleLandTempData(String cityName) throws UnsupportedEncodingException {
         String regId = getRegIdByCity(cityName);
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
