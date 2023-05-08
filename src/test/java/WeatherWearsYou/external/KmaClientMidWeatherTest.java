@@ -11,7 +11,7 @@ public class KmaClientMidWeatherTest {
         KmaClientMidWeather client = new KmaClientMidWeather();
         String cityName = "Gangwondo";
         // Set a target date within the range of 3 to 10 days from today
-        String targetDate = "2023.05.14";
+        String targetDate = "20230514";
 
         try {
             // Set the character encoding of the output stream to UTF-8

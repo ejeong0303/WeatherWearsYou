@@ -69,7 +69,7 @@ public class KmaClientMidWeather {
         LinkedHashMap<String, Object> weatherData = getMiddleLandWeatherData(cityName);
 
         // Calculate the difference between the target date and today's date
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Date today = new Date();
         Date target = sdf.parse(targetDate);
         long diff = (target.getTime() - today.getTime()) / (24 * 60 * 60 * 1000) + 1;

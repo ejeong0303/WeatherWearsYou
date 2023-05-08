@@ -23,6 +23,10 @@ public class OpenAiApiClient {
     @Value("${openai.api_key}")
     private String openaiApiKey;
 
+    public void setOpenaiApiKey(String openaiApiKey) {
+        this.openaiApiKey = openaiApiKey;
+    }
+
     private final HttpClient client = HttpClient.newHttpClient();
 
     public String postToOpenAiApi(String requestBodyAsJson, OpenAiService service)
