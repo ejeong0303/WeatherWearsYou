@@ -1,8 +1,6 @@
+//달력 화면에서 날씨정보 제공목적
 package WeatherWearsYou.external;
 
-import WeatherWearsYou.external.KmaClientMidTemp;
-import WeatherWearsYou.external.KmaClientMidWeather;
-import WeatherWearsYou.external.KmaClientVilageFcst;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;

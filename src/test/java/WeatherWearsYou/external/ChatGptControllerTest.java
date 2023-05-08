@@ -1,9 +1,9 @@
 package WeatherWearsYou.external;
 
-import WeatherWearsYou.external.*;
-import WeatherWearsYou.*;
-import org.springframework.http.ResponseEntity;
+import WeatherWearsYou.FormInputDTO;
+import WeatherWearsYou.OpenAiApiClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.ResponseEntity;
 
 public class ChatGptControllerTest {
 
@@ -12,7 +12,7 @@ public class ChatGptControllerTest {
         // Manually create instances of required dependencies
         ObjectMapper jsonMapper = new ObjectMapper();
         OpenAiApiClient client = new OpenAiApiClient(); // You may need to set the API key manually
-        client.setOpenaiApiKey("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"); // Replace with your actual API key
+        client.setOpenaiApiKey("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"); // Replace with your actual API key
 
         WeatherController weatherController = new WeatherController(); // You may need to set the API key manually
 
@@ -22,8 +22,12 @@ public class ChatGptControllerTest {
         chatGptController.setClient(client);
         chatGptController.setWeatherController(weatherController);
 
-        // Call the chat method with a FormInputDTO containing the prompt
-        FormInputDTO dto = new FormInputDTO("female,20230508");
+        // Call the chat method with a FormInputDTO containing the city, gender, target date, and style
+        FormInputDTO dto = new FormInputDTO();
+        dto.setCity("Seoul");
+        dto.setGender("male");
+        dto.setTargetDate("20230514");
+        dto.setStyle("댄디 남친룩"); // Set the style value
         ResponseEntity<String> response = chatGptController.chat(dto);
 
         // Print the response
