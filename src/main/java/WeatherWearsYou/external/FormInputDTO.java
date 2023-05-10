@@ -1,4 +1,4 @@
-package WeatherWearsYou;
+package WeatherWearsYou.external;
 
 public class FormInputDTO {
     private String prompt;

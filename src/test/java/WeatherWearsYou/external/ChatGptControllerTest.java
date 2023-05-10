@@ -1,7 +1,5 @@
 package WeatherWearsYou.external;
 
-import WeatherWearsYou.FormInputDTO;
-import WeatherWearsYou.OpenAiApiClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
 
@@ -12,7 +10,7 @@ public class ChatGptControllerTest {
         // Manually create instances of required dependencies
         ObjectMapper jsonMapper = new ObjectMapper();
         OpenAiApiClient client = new OpenAiApiClient(); // You may need to set the API key manually
-        client.setOpenaiApiKey("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"); // Replace with your actual API key
+        client.setOpenaiApiKey("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"); // Replace with your actual API key
 
         WeatherController weatherController = new WeatherController(); // You may need to set the API key manually
 

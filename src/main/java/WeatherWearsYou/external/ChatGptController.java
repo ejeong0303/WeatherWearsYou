@@ -1,6 +1,7 @@
 //간혹 timeout error 발생
 package WeatherWearsYou.external;
 
+import WeatherWearsYou.item.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,9 +11,7 @@ import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import WeatherWearsYou.FormInputDTO;
-import WeatherWearsYou.OpenAiApiClient;
-import WeatherWearsYou.OpenAiApiClient.OpenAiService;
+import WeatherWearsYou.external.OpenAiApiClient.OpenAiService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +24,7 @@ public class ChatGptController {
     @Autowired private ObjectMapper jsonMapper;
     @Autowired private OpenAiApiClient client;
     @Autowired private WeatherController weatherController;
+    @Autowired private ItemService itemService;
 
     public void setJsonMapper(ObjectMapper jsonMapper) {
         this.jsonMapper = jsonMapper;

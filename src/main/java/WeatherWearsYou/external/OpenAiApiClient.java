@@ -1,4 +1,4 @@
-package WeatherWearsYou;
+package WeatherWearsYou.external;
 
 
 import java.io.IOException;
