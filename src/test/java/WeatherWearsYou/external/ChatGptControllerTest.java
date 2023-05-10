@@ -10,7 +10,7 @@ public class ChatGptControllerTest {
         // Manually create instances of required dependencies
         ObjectMapper jsonMapper = new ObjectMapper();
         OpenAiApiClient client = new OpenAiApiClient(); // You may need to set the API key manually
-        client.setOpenaiApiKey("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"); // Replace with your actual API key
+        client.setOpenaiApiKey("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"); // Replace with your actual API key
 
         WeatherController weatherController = new WeatherController(); // You may need to set the API key manually
 
