@@ -10,8 +10,8 @@ public class KmaClientVilageFcstTest {
 
     public static void main(String[] args) {
         KmaClientVilageFcst kmaClient = new KmaClientVilageFcst();
-        String cityName = "Gangwondo";
-        String targetDate = "20230508"; // Replace with your target date in "yyyyMMdd" format
+        String cityName = "gangwon";
+        String targetDate = "20230514"; // Replace with your target date in "yyyyMMdd" format
 
         try {
             System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));

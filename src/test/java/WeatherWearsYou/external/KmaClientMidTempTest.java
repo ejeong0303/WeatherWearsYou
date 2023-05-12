@@ -11,10 +11,10 @@ public class KmaClientMidTempTest {
         KmaClientMidTemp client = new KmaClientMidTemp();
 
         // Set a target date within the range of 3 to 10 days from today
-        String targetDate = "20230514";
+        String targetDate = "20230522";
 
         // Set a city name
-        String cityName = "Gangwondo";
+        String cityName = "gangwon";
 
         try {
             // Set the output encoding to UTF-8

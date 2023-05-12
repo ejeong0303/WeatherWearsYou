@@ -11,27 +11,57 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+import javax.net.ssl.*;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 public class KmaClientMidWeather {
+    public static void disableSslVerification() {
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[] {
+                    new X509TrustManager() {
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
+
+                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                        }
+
+                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                        }
+                    }
+            };
+
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+            HostnameVerifier allHostsValid = (hostname, session) -> true;
+
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private String getRegIdByCity(String cityName) {
         HashMap<String, String> cityToRegId = new HashMap<>();
-        cityToRegId.put("Sejong", "11C20000");
-        cityToRegId.put("Chungcheongbukdo", "11C10000");
-        cityToRegId.put("Chungcheongnamdo", "11C20000");
-        cityToRegId.put("Jejudo", "11G00000");
-        cityToRegId.put("Gyeongsangbukdo", "11H10000");
-        cityToRegId.put("Gyeongsangnamdo", "11H20000");
-        cityToRegId.put("Jeollabukdo", "11F10000");
-        cityToRegId.put("Jeollanamdo", "11F20000");
-        cityToRegId.put("Gangwondo", "11D10000");
-        cityToRegId.put("Gyeonggido", "11B00000");
-        cityToRegId.put("Ulsan", "11H20000");
-        cityToRegId.put("Busan", "11H20000");
-        cityToRegId.put("Daegu", "11H10000");
-        cityToRegId.put("Daejeon", "11C20000");
-        cityToRegId.put("Incheon", "11B00000");
-        cityToRegId.put("Seoul", "11B00000");
-        cityToRegId.put("Gwangju", "11F20000");
+        cityToRegId.put("sejong", "11C20000");
+        cityToRegId.put("chungbuk", "11C10000");
+        cityToRegId.put("chungnam", "11C20000");
+        cityToRegId.put("jeju", "11G00000");
+        cityToRegId.put("gyeongbuk", "11H10000");
+        cityToRegId.put("gyeongnam", "11H20000");
+        cityToRegId.put("jeonbuk", "11F10000");
+        cityToRegId.put("jeonnam", "11F20000");
+        cityToRegId.put("gangwon", "11D10000");
+        cityToRegId.put("gyeonggi", "11B00000");
+        cityToRegId.put("ulsan", "11H20000");
+        cityToRegId.put("busan", "11H20000");
+        cityToRegId.put("daegu", "11H10000");
+        cityToRegId.put("daejeon", "11C20000");
+        cityToRegId.put("incheon", "11B00000");
+        cityToRegId.put("seoul", "11B00000");
+        cityToRegId.put("gwangju", "11F20000");
 
         return cityToRegId.getOrDefault(cityName, "11B00000"); // Default to 서울특별시 if city not found
     }
@@ -40,6 +70,7 @@ public class KmaClientMidWeather {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
+        disableSslVerification();
         WebClient webClient = WebClient.builder()
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .build();
@@ -81,7 +112,10 @@ public class KmaClientMidWeather {
 
         // Get the weather and precipitation rate for the target date
         LinkedHashMap<String, String> result = new LinkedHashMap<>();
-        String weatherStatus = (String) weatherData.get("wf" + diff + "Am");
+        String weatherStatus = "null";
+        if (diff <= 7) weatherStatus = (String) weatherData.get("wf" + diff + "Am");
+        else if(diff >= 8) weatherStatus = (String) weatherData.get("wf" + diff);
+
         switch (weatherStatus) {
             case "맑음":
                 weatherStatus = "sunny";
@@ -96,12 +130,17 @@ public class KmaClientMidWeather {
                 break;
         }
         result.put("weather", weatherStatus);
+        int PrecipitationRate = 0;
+        if (diff <= 7) {
+            double precipitationRateAm = Double.parseDouble(String.valueOf(weatherData.get("rnSt" + diff + "Am")));
+            double precipitationRatePm = Double.parseDouble(String.valueOf(weatherData.get("rnSt" + diff + "Pm")));
 
-        double precipitationRateAm = Double.parseDouble(String.valueOf(weatherData.get("rnSt" + diff + "Am")));
-        double precipitationRatePm = Double.parseDouble(String.valueOf(weatherData.get("rnSt" + diff + "Pm")));
-
-        // Calculate the mean precipitation rate and round it to the nearest integer
-        int PrecipitationRate = (int) Math.round((precipitationRateAm + precipitationRatePm) / 2);
+            // Calculate the mean precipitation rate and round it to the nearest integer
+            PrecipitationRate = (int) Math.round((precipitationRateAm + precipitationRatePm) / 2);
+        }
+        else if(diff >= 8){
+            PrecipitationRate = (int)Double.parseDouble(String.valueOf(weatherData.get("rnSt" + diff)));
+        }
         result.put("PrecipitationRate", String.valueOf(PrecipitationRate));
 
         return result;

@@ -12,26 +12,57 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.net.ssl.*;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
 public class KmaClientVilageFcst {
+    public static void disableSslVerification() {
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[] {
+                    new X509TrustManager() {
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
+
+                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                        }
+
+                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                        }
+                    }
+            };
+
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+            HostnameVerifier allHostsValid = (hostname, session) -> true;
+
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private Integer[] getNxNyByCity(String cityName) {
         HashMap<String, Integer[]> cityToNxNy = new HashMap<>();
-        cityToNxNy.put("Sejong", new Integer[]{66, 103});
-        cityToNxNy.put("Chungcheongbukdo", new Integer[]{69, 107});
-        cityToNxNy.put("Chungcheongnamdo", new Integer[]{55, 106});
-        cityToNxNy.put("Jejudo", new Integer[]{52, 38});
-        cityToNxNy.put("Gyeongsangbukdo", new Integer[]{89, 91});
-        cityToNxNy.put("Gyeongsangnamdo", new Integer[]{91, 77});
-        cityToNxNy.put("Jeollabukdo", new Integer[]{63, 89});
-        cityToNxNy.put("Jeollanamdo", new Integer[]{52, 71});
-        cityToNxNy.put("Gangwondo", new Integer[]{73, 134});
-        cityToNxNy.put("Gyeonggido", new Integer[]{60, 120});
-        cityToNxNy.put("Ulsan", new Integer[]{102, 84});
-        cityToNxNy.put("Busan", new Integer[]{98, 76});
-        cityToNxNy.put("Daegu", new Integer[]{89, 90});
-        cityToNxNy.put("Daejeon", new Integer[]{67, 100});
-        cityToNxNy.put("Incheon", new Integer[]{55, 124});
-        cityToNxNy.put("Seoul", new Integer[]{60, 127});
-        cityToNxNy.put("Gwangju", new Integer[]{58, 74});
+        cityToNxNy.put("sejong", new Integer[]{66, 103});
+        cityToNxNy.put("chungbuk", new Integer[]{69, 107});
+        cityToNxNy.put("chungnam", new Integer[]{55, 106});
+        cityToNxNy.put("jeju", new Integer[]{52, 38});
+        cityToNxNy.put("gyeongbuk", new Integer[]{89, 91});
+        cityToNxNy.put("gyeongnam", new Integer[]{91, 77});
+        cityToNxNy.put("jeonabuk", new Integer[]{63, 89});
+        cityToNxNy.put("jeonnam", new Integer[]{52, 71});
+        cityToNxNy.put("gangwon", new Integer[]{73, 134});
+        cityToNxNy.put("gyeonggi", new Integer[]{60, 120});
+        cityToNxNy.put("ulsan", new Integer[]{102, 84});
+        cityToNxNy.put("busan", new Integer[]{98, 76});
+        cityToNxNy.put("daegu", new Integer[]{89, 90});
+        cityToNxNy.put("daejeon", new Integer[]{67, 100});
+        cityToNxNy.put("incheon", new Integer[]{55, 124});
+        cityToNxNy.put("seoul", new Integer[]{60, 127});
+        cityToNxNy.put("gwangju", new Integer[]{58, 74});
 
         return cityToNxNy.getOrDefault(cityName, new Integer[]{60, 127}); // Default to 서울특별시 if city not found
     }
@@ -44,7 +75,7 @@ public class KmaClientVilageFcst {
                 .build();
 
         Integer[] nxNyValues = getNxNyByCity(cityName);
-
+        disableSslVerification();
         HashMap result = webClient.get()
                 .uri(UriComponentsBuilder.newInstance()
                         .scheme("https")

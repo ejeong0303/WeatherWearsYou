@@ -9,13 +9,13 @@ import java.nio.charset.StandardCharsets;
 public class KmaClientMidWeatherTest {
     public static void main(String[] args) {
         KmaClientMidWeather client = new KmaClientMidWeather();
-        String cityName = "Gangwondo";
+        String cityName = "gangwon";
         // Set a target date within the range of 3 to 10 days from today
-        String targetDate = "20230514";
+        String targetDate = "20230522";
 
         try {
             // Set the character encoding of the output stream to UTF-8
-            System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
+            //System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
 
             LinkedHashMap<String, String> weatherInfo = client.getWeatherForSpecificDate(cityName,targetDate);
             System.out.println("Weather information for " + cityName + " in " + targetDate + ":");

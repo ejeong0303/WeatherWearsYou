@@ -3,6 +3,8 @@ package WeatherWearsYou.external;
 
 import WeatherWearsYou.item.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,8 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -44,13 +48,16 @@ public class ChatGptController {
         var completion = CompletionRequest.defaultWith(message, style);
         var postBodyJson = jsonMapper.writeValueAsString(completion);
         var responseBody = client.postToOpenAiApi(postBodyJson, OpenAiService.GPT_3);
-        var completionResponse = jsonMapper.readValue(responseBody, CompletionResponse.class);
+        var completionResponse = jsonMapper.readValue(new String(responseBody, StandardCharsets.UTF_8), CompletionResponse.class);
         return completionResponse.firstAnswer().orElseThrow();
     }
 
 
     @PostMapping(path = "/")
-    public ResponseEntity<String> chat(@ModelAttribute FormInputDTO dto) {
+    public ResponseEntity<byte[]> chat(@ModelAttribute FormInputDTO dto) {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentType(MediaType.valueOf("application/json;charset=UTF-8"));
+
         try {
             String city = dto.getCity(); // Get the city information from the frontend
             String gender = dto.getGender(); // Get the gender information from the frontend
@@ -70,18 +77,23 @@ public class ChatGptController {
             }
             String[] categories = response.split("\\r?\\\n");
 
-            LinkedHashMap<String, List<String>> results = new LinkedHashMap<>();
-            String[] categoriesKeys = {"outer", "top", "bottom", "shoes"};
+            categories = Arrays.copyOfRange(categories, 2, categories.length);
 
-            for (int i = 2; i < categories.length; i++) {
+            LinkedHashMap<String, List<String>> results = new LinkedHashMap<>();
+            String[] categoriesKeys = {"Top", "Bottom", "Outer", "Shoes"};
+
+            for (int i = 0; i < categories.length; i++) {
                 String[] items = categories[i].substring(categories[i].indexOf(":") + 1).trim().split(",\\s*");
-                results.put(categoriesKeys[i - 2], new ArrayList<>(Arrays.asList(items)));
+                results.put(categoriesKeys[i], new ArrayList<>(Arrays.asList(items)));
             }
 
-            return ResponseEntity.status(HttpStatus.OK).body(jsonMapper.writeValueAsString(results));
+            String jsonResponse = jsonMapper.writeValueAsString(results);
+            byte[] jsonResponseBytes = jsonResponse.getBytes(StandardCharsets.UTF_8);
+            return ResponseEntity.status(HttpStatus.OK).headers(responseHeaders).body(jsonResponseBytes);
         } catch (Exception e) {
             e.printStackTrace(); // Add this line to print the detailed error message
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in communication with OpenAI ChatGPT API.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(responseHeaders).body(new byte[0]);
         }
     }
 }
+

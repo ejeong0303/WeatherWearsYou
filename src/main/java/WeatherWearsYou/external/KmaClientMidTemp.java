@@ -11,28 +11,57 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+import javax.net.ssl.*;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 public class KmaClientMidTemp {
+    public static void disableSslVerification() {
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[] {
+                    new X509TrustManager() {
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
 
+                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                        }
+
+                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                        }
+                    }
+            };
+
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+            HostnameVerifier allHostsValid = (hostname, session) -> true;
+
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private String getRegIdByCity(String cityName) {
         HashMap<String, String> cityToRegId = new HashMap<>();
-        cityToRegId.put("Sejong", "11C20404");
-        cityToRegId.put("Chungcheongbukdo", "11C10301");
-        cityToRegId.put("Chungcheongnamdo", "11C20104");
-        cityToRegId.put("Jejudo", "11G00201");
-        cityToRegId.put("Gyeongsangbukdo", "11H10501");
-        cityToRegId.put("Gyeongsangnamdo", "11H20301");
-        cityToRegId.put("Jeollabukdo", "11F10201");
-        cityToRegId.put("Jeollanamdo", "21F20804");
-        cityToRegId.put("Gangwondo", "11D10301");
-        cityToRegId.put("Gyeonggido", "11B20601");
-        cityToRegId.put("Ulsan", "11H20101");
-        cityToRegId.put("Busan", "11H20201");
-        cityToRegId.put("Daegu", "11H10701");
-        cityToRegId.put("Daejeon", "11C20401");
-        cityToRegId.put("Incheon", "11B20201");
-        cityToRegId.put("Seoul", "11B10101");
-        cityToRegId.put("Gwangju", "11B20702");
+        cityToRegId.put("sejong", "11C20404");
+        cityToRegId.put("chungbuk", "11C10301");
+        cityToRegId.put("chungnam", "11C20104");
+        cityToRegId.put("Jeju", "11G00201");
+        cityToRegId.put("gyeongbuk", "11H10501");
+        cityToRegId.put("gyeongnam", "11H20301");
+        cityToRegId.put("jeonbuk", "11F10201");
+        cityToRegId.put("jeonam", "21F20804");
+        cityToRegId.put("gangwon", "11D10301");
+        cityToRegId.put("gyeonggi", "11B20601");
+        cityToRegId.put("ulsan", "11H20101");
+        cityToRegId.put("busan", "11H20201");
+        cityToRegId.put("daegu", "11H10701");
+        cityToRegId.put("daejeon", "11C20401");
+        cityToRegId.put("incheon", "11B20201");
+        cityToRegId.put("seoul", "11B10101");
+        cityToRegId.put("gwangju", "11B20702");
 
         return cityToRegId.getOrDefault(cityName, "11B10101"); // Default to 서울특별시 if city not found
     }
@@ -41,6 +70,7 @@ public class KmaClientMidTemp {
         String regId = getRegIdByCity(cityName);
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        disableSslVerification();
 
         WebClient webClient = WebClient.builder()
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
