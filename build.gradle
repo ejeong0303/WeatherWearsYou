@@ -23,6 +23,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.seleniumhq.selenium:selenium-java:4.9.0'
     implementation 'com.mounacheikhna.jsongenerator:jsongenerator:0.5'
 	implementation 'com.matrixshell:jsongenerator:0.0.3'
 	implementation 'com.paypal.selion:SeLion-Project-BOM:1.2.0'
