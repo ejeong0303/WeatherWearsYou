@@ -42,12 +42,11 @@ public class ItemService {
         List<Specification<Item>> specs = buildSpecificationsFromChatGPTResponse(chatGPTResponse);
         List<Item> items = new ArrayList<>();
         for (Specification<Item> spec : specs) {
-            List<Item> foundItems = itemRepository.findAll(spec);
-            System.out.println("Found items: " + foundItems);
+            //List<Item> foundItems = itemRepository.findAll(spec);
+            //System.out.println("Found items: " + foundItems);
             items.addAll(itemRepository.findAll(spec));
-            //
         }
-        System.out.println("Total items: " + items);
+        //System.out.println("Total items: " + items);
         return items;
     }
 
