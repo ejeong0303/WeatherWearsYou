@@ -18,7 +18,7 @@ public class WeatherWearsYouApplication {
 		return new WebMvcConfigurer(){
 			@Override
 			public void addCorsMappings(CorsRegistry registry){
-				registry.addMapping("/**").allowedOrigins("http://ec2-52-78-226-157.ap-northeast-2.compute.amazonaws.com:8080/");
+				registry.addMapping("/**").allowedOrigins("..");
 			}
 		};
 	}
