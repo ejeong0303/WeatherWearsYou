@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin(origins = "http://ec2-52-78-226-157.ap-northeast-2.compute.amazonaws.com:8080")
+@CrossOrigin(origins = "..")
 @RestController
 @RequestMapping("/items")
 public class ItemController {
