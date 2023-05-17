@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/items")
 public class ItemController {
