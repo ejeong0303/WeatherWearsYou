@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 
-@CrossOrigin(origins = "http://ec2-52-78-226-157.ap-northeast-2.compute.amazonaws.com:8080")
+@CrossOrigin(origins = "..")
 @RestController
 public class ChatGptController {
 
