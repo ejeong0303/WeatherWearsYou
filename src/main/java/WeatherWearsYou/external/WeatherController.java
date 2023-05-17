@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin(origins = "http://ec2-52-78-226-157.ap-northeast-2.compute.amazonaws.com:8080")
+@CrossOrigin(origins = "..")
 @RestController
 public class WeatherController {
 
