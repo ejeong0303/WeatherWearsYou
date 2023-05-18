@@ -53,7 +53,7 @@ public class ChatGptController {
     }
 
 
-    @PostMapping(path = "/GPT")
+    @PostMapping(path = "/")
     public ResponseEntity<byte[]> chat(@ModelAttribute FormInputDTO dto) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.valueOf("application/json;charset=UTF-8"));
