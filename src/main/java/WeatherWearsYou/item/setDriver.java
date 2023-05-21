@@ -27,6 +27,7 @@ public class setDriver {
         options.addArguments("--disable-gpu");
         options.addArguments("--user-data-dir=" + System.getProperty("java.io.tmpdir"));
         options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--whitelisted-ips=");
 
         options.setCapability("ignoreProtectedModeSettings", true);
 

@@ -7,21 +7,25 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-public class ItemCrawling {
-    private String category;
-    private String type;
-    private int productID;
-    private String productName;
-    private String price;
-    //0: male 1: female 2: unisex
-    private int gender;
-    private String imgLink;
-    private List<String> tags;
 
-    public void doCrawlByCategoryID(int categoryID, int productCnt) throws InterruptedException {
+import static WeatherWearsYou.item.Item.BOTTOM;
+import static WeatherWearsYou.item.Item.MALE;
+
+public class ItemCrawling {
+    private static String category;
+    private static String itemType;
+    private static int itemId;
+    private static String itemName;
+    private static Integer price;
+    //0: male 1: female 2: unisex
+    private static Integer gender;
+    private static String imgLink;
+    private static String tags;
+
+    public static void doCrawlingByCategoryID(Integer categoryID, Integer productCnt, ItemRepository itemRepository) throws InterruptedException {
         WebDriver driver = setDriver.getChromeDriver();
         String url = "https://www.musinsa.com/app/";
-        String tmpUrl = "";
+        String tmpUrl;
 
         driver.get(url);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -48,8 +52,7 @@ public class ItemCrawling {
         for(String typeUrl : typeUrls) {
             driver.navigate().to(typeUrl);
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-            type = driver.findElement(By.xpath("//*[@id=\"location_category_2_depth\"]")).getText();
-            System.out.println("detail type : " + type);
+            itemType = driver.findElement(By.xpath("//*[@id=\"location_category_2_depth\"]")).getText();
 
             List<WebElement> products = driver.findElement(By.id("searchList"))
                     .findElements(By.xpath("//*[@id=\"searchList\"]/li[position()<" + (productCnt + 1) + "]"));
@@ -66,17 +69,18 @@ public class ItemCrawling {
                 driver.navigate().to(productUrl);
                 String[] array = productUrl.split("/");
 
-                productID =  Integer.parseInt(array[5]);
-                //Thread.sleep(500);
+                itemId =  Integer.parseInt(array[5]);
                 driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
-                productName = driver.findElement(By.xpath("//*[@id=\"page_product_detail\"]/div[3]/div[3]/span/em")).getText();
+                itemName = driver.findElement(By.xpath("//*[@id=\"page_product_detail\"]/div[3]/div[3]/span/em")).getText();
 
                 imgLink = driver.findElement(By.xpath("//*[@id=\"detail_bigimg\"]/div"))
                         .findElement(By.tagName("img")).getAttribute("src");
 
                 try {
-                    price = driver.findElement(By.xpath("//*[@id=\"list_price\"]")).getText();
+                    String txt = driver.findElement(By.xpath("//*[@id=\"sPrice\"]/ul/li[1]/span[2]")).getAttribute("textContent");
+                    txt = txt.replaceAll("[^0-9]","");
+                    price = Integer.parseInt(txt);
                 } catch (Exception e) {
                     WebElement tmp = driver.findElement(By.xpath("//*[@id=\"goods_price\"]"));
                     String txt = tmp.getText().trim();
@@ -85,7 +89,8 @@ public class ItemCrawling {
                     {
                         txt = txt.replaceFirst(child.getText(), "").trim();
                     }
-                    price = txt;
+                    txt = txt.replaceAll("[^0-9]","");
+                    price = Integer.parseInt(txt);
                 }
 
                 List<WebElement> genders = driver.findElement(By.className("txt_gender")).findElements(By.tagName("span"));
@@ -99,11 +104,23 @@ public class ItemCrawling {
                     gender = 1;
                 }
 
-                System.out.println("product ID : " + productID);
-                System.out.println("product Name : " + productName);
-                System.out.println("product img : " + imgLink);
-                System.out.println("product price : " + price);
-                System.out.println("product gender : " + gender);
+                List<WebElement> styletags = driver.findElement(By.cssSelector(".article-tag-list.list"))
+                        .findElement(By.tagName("p")).findElements(By.tagName("a"));
+                tags = "";
+                for (WebElement tag : styletags)
+                {
+                    tags = tags + tag.getAttribute("textContent");
+                }
+                Item item = new Item(itemId, categoryID, itemType, itemName, price, gender, imgLink, tags);
+                itemRepository.save(item);
+
+
+                System.out.println("product Name : " + itemName);
+                //System.out.println("taglist :" + tags);
+                //System.out.println("product ID : " + itemId);
+                //System.out.println("product img : " + imgLink);
+                //System.out.println("product price : " + price);
+                //System.out.println("product gender : " + gender);
             }
         }
         driver.quit();

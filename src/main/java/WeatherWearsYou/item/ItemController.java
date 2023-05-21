@@ -20,8 +20,8 @@ public class ItemController {
 
     @GetMapping
     public List<Item> getItemsByFilter(@RequestParam String chatGPTResponse,
-                                       @RequestParam(required = false) Double minPrice,
-                                       @RequestParam(required = false) Double maxPrice,
+                                       @RequestParam(required = false) Integer minPrice,
+                                       @RequestParam(required = false) Integer maxPrice,
                                        @RequestParam(required = false) String style) throws IOException {
         if (minPrice != null && maxPrice != null && style != null) {
             return itemService.getItemsByChatGPTResponseAndStyleAndPriceRange(chatGPTResponse, style, minPrice, maxPrice);

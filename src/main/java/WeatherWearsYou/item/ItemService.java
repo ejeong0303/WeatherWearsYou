@@ -11,6 +11,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static WeatherWearsYou.item.Item.*;
+
 @Service
 public class ItemService {
 
@@ -24,10 +26,10 @@ public class ItemService {
     }
 
     private List<Specification<Item>> buildSpecificationsFromChatGPTResponse(String chatGPTResponse) throws IOException {
-        LinkedHashMap<String, List<String>> categories = jsonMapper.readValue(chatGPTResponse, LinkedHashMap.class);
+        LinkedHashMap<Integer, List<String>> categories = jsonMapper.readValue(chatGPTResponse, LinkedHashMap.class);
         List<Specification<Item>> specs = new ArrayList<>();
-        for (Map.Entry<String, List<String>> entry : categories.entrySet()) {
-            String category = entry.getKey();
+        for (Map.Entry<Integer, List<String>> entry : categories.entrySet()) {
+            Integer category = entry.getKey();
             List<String> itemTypes = entry.getValue();
             for (String itemType : itemTypes) {
                 Specification<Item> spec = ItemSpecification.hasCategory(category)
@@ -50,7 +52,7 @@ public class ItemService {
         return items;
     }
 
-    public List<Item> getItemsByChatGPTResponseAndPriceRange(String chatGPTResponse, Double minPrice, Double maxPrice) throws IOException {
+    public List<Item> getItemsByChatGPTResponseAndPriceRange(String chatGPTResponse, Integer minPrice, Integer maxPrice) throws IOException {
         List<Specification<Item>> specs = buildSpecificationsFromChatGPTResponse(chatGPTResponse);
         List<Item> items = new ArrayList<>();
         for (Specification<Item> spec : specs) {
@@ -68,7 +70,7 @@ public class ItemService {
         return items;
     }
 
-    public List<Item> getItemsByChatGPTResponseAndStyleAndPriceRange(String chatGPTResponse, String style, Double minPrice, Double maxPrice) throws IOException {
+    public List<Item> getItemsByChatGPTResponseAndStyleAndPriceRange(String chatGPTResponse, String style, Integer minPrice, Integer maxPrice) throws IOException {
         List<Specification<Item>> specs = buildSpecificationsFromChatGPTResponse(chatGPTResponse);
         List<Item> items = new ArrayList<>();
         for (Specification<Item> spec : specs) {

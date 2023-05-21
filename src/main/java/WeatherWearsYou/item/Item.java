@@ -1,54 +1,68 @@
 package WeatherWearsYou.item;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "items")
+@NoArgsConstructor
+@IdClass(ItemPK.class)
 public class Item {
+    public static int TOP = 0;
+    public static int BOTTOM = 1;
+    public static int OUTER = 2;
+    public static int SHOES = 3;
+    public static int MALE = 0;
+    public static int FEMALE = 1;
+    public static int UNISEX = 2;
     @Id
-    @Column(name = "item_id")
-    private String id;
+    @Column(name = "item_id", nullable = false)
+    private Integer id;
 
-    @Column(name = "category")
-    private String category;
+    //top:0 bottom:1 outer:2 shoes:3
+    @Id
+    @Column(name = "category", nullable = false)
+    private Integer category;
 
-    @Column(name = "itemType")
+    @Column(name = "itemType", nullable = false, length = 30)
     private String itemType;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "price", nullable = false)
+    private Integer price;
+
+    //male:0 female:1 unisex:2
+    @Column(name = "gender", nullable = false, columnDefinition = "TINYINT", length = 1)
+    private Integer gender;
+
+    @Column(name = "imgLink")
+    private String imgLink;
 
     @Column(name = "style")
     private String style;
 
-    @Column(name = "price")
-    private double price;
-
-    @Column(name = "gender")
-    private String gender;
-
     // Constructors
-    public Item() {
-    }
 
-    public Item(String id, String category, String itemType, String name, String style, double price, String gender) {
+    public Item(Integer id, Integer category, String itemType, String name, Integer price, Integer gender, String imgLink, String style) {
         this.id = id;
         this.category = category;
         this.itemType = itemType;
         this.name = name;
-        this.style = style;
         this.price = price;
         this.gender = gender;
+        this.imgLink = imgLink;
+        this.style = style;
     }
 
     // Getters
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public String getCategory() {
-        return category;
-    }
+    public Integer getCategory() { return category; }
 
     public String getItemType() {
         return itemType;
@@ -58,24 +72,28 @@ public class Item {
         return name;
     }
 
+    public Integer getPrice() {
+        return price;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public String getImgLink() {
+        return imgLink;
+    }
+
     public String getStyle() {
         return style;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
     // Setters
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 
@@ -87,15 +105,15 @@ public class Item {
         this.name = name;
     }
 
-    public void setStyle(String style) {
-        this.style = style;
-    }
-
-    public void setPrice(double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
+
+    public void setImgLink(String imgLink) { this.imgLink = imgLink; }
+
+    public void setStyle(String style) { this.style = style; }
 }

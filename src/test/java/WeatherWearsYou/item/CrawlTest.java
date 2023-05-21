@@ -6,28 +6,28 @@ public class CrawlTest {
     public static void main(String[] args) throws InterruptedException {
         /*
         //top
-        Crawling top = new Crawling();
-        top.doCrawlByCategoryID(4, 5);
+        ItemCrawling top = new ItemCrawling();
+        top.doCrawlingByCategoryID(4, 5);
 
         //outer
-        Crawling outer = new Crawling();
-        outer.doCrawlByCategoryID(6, 5);
-
-        //skirt
-        Crawling skirt = new Crawling();
-        skirt.doCrawlByCategoryID(12, 5);
-
-        //sneakers
-        Crawling sneakers = new Crawling();
-        sneakers.doCrawlByCategoryID(14, 5);
-
-        //shoes
-        Crawling shoes = new Crawling();
-        shoes.doCrawlByCategoryID(16, 5);
-        */
+        ItemCrawling outer = new ItemCrawling();
+        outer.doCrawlingByCategoryID(6, 5);
 
         //pants
         ItemCrawling pants = new ItemCrawling();
-        pants.doCrawlByCategoryID(8, 5);
+        //pants.doCrawlingByCategoryID(8, 5);
+
+        //skirt
+        ItemCrawling skirt = new ItemCrawling();
+        skirt.doCrawlingByCategoryID(12, 5);
+
+        //sneakers
+        ItemCrawling sneakers = new ItemCrawling();
+        sneakers.doCrawlingByCategoryID(14, 5);
+
+        //shoes
+        ItemCrawling shoes = new ItemCrawling();
+        shoes.doCrawlingByCategoryID(16, 5);
+         */
     }
 }

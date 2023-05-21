@@ -3,17 +3,17 @@ package WeatherWearsYou.item;
 import java.util.List;
 
 public class ItemFilter {
-    private List<String> categories;
+    private List<Integer> categories;
     private String style;
-    private Double minPrice;
-    private Double maxPrice;
-    private String gender;
+    private Integer minPrice;
+    private Integer maxPrice;
+    private Integer gender;
 
     // Constructors
     public ItemFilter() {
     }
 
-    public ItemFilter(List<String> categories, String style, Double minPrice, Double maxPrice, String gender) {
+    public ItemFilter(List<Integer> categories, String style, Integer minPrice, Integer maxPrice, Integer gender) {
         this.categories = categories;
         this.style = style;
         this.minPrice = minPrice;
@@ -22,7 +22,7 @@ public class ItemFilter {
     }
 
     // Getters
-    public List<String> getCategories() {
+    public List<Integer> getCategories() {
         return categories;
     }
 
@@ -30,20 +30,20 @@ public class ItemFilter {
         return style;
     }
 
-    public Double getMinPrice() {
+    public Integer getMinPrice() {
         return minPrice;
     }
 
-    public Double getMaxPrice() {
+    public Integer getMaxPrice() {
         return maxPrice;
     }
 
-    public String getGender() {
+    public Integer getGender() {
         return gender;
     }
 
     // Setters
-    public void setCategories(List<String> categories) {
+    public void setCategories(List<Integer> categories) {
         this.categories = categories;
     }
 
@@ -51,15 +51,15 @@ public class ItemFilter {
         this.style = style;
     }
 
-    public void setMinPrice(Double minPrice) {
+    public void setMinPrice(Integer minPrice) {
         this.minPrice = minPrice;
     }
 
-    public void setMaxPrice(Double maxPrice) {
+    public void setMaxPrice(Integer maxPrice) {
         this.maxPrice = maxPrice;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 }
