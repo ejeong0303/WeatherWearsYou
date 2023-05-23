@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:5000")
 @RestController
 public class ChatGptController {
 
