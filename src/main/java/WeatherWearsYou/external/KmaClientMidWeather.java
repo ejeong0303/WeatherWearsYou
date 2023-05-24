@@ -123,6 +123,9 @@ public class KmaClientMidWeather {
             case "구름많음":
                 weatherStatus = "cloudy";
                 break;
+            case "흐리고 비":
+                weatherStatus = "rainy";
+                break;
             case "흐림":
                 weatherStatus = "blurry";
                 break;

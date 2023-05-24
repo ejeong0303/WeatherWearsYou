@@ -119,7 +119,10 @@ public class KmaClientVilageFcst {
 
         return itemList; // Return the entire itemList
     }
-    private String getWeatherStatus(int fcstValue) {
+    private String getWeatherStatus(int fcstValue, int pty) {
+        if (pty != 0) {
+            return "rainy";
+        }
         switch (fcstValue) {
             case 1:
                 return "sunny";
@@ -144,6 +147,7 @@ public class KmaClientVilageFcst {
         ArrayList<LinkedHashMap> filteredItems = itemList.stream()
                 .filter(item -> targetDate.equals(item.get("fcstDate")))
                 .collect(Collectors.toCollection(ArrayList::new));
+        int pty = filteredItems.stream().filter(item -> "PTY".equals(item.get("category"))).mapToInt(item -> (int)Double.parseDouble((String)item.get("fcstValue"))).findFirst().orElse(0);
 
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
         result.put("minTemp", filteredItems.stream().filter(item -> "TMN".equals(item.get("category"))).mapToInt(item -> (int)Double.parseDouble((String)item.get("fcstValue"))).findFirst().orElse(0));
@@ -151,7 +155,7 @@ public class KmaClientVilageFcst {
         result.put("precipitationRate", filteredItems.stream().filter(item -> "POP".equals(item.get("category"))).mapToInt(item -> (int)Double.parseDouble((String)item.get("fcstValue"))).findFirst().orElse(0));
   //      result.put("weather", filteredItems.stream().filter(item -> "SKY".equals(item.get("category"))).mapToInt(item -> (int)Double.parseDouble((String)item.get("fcstValue"))).findFirst().orElse(0));
         int sky = filteredItems.stream().filter(item -> "SKY".equals(item.get("category"))).mapToInt(item -> (int)Double.parseDouble((String)item.get("fcstValue"))).findFirst().orElse(0);
-        result.put("weather", getWeatherStatus(sky));
+        result.put("weather", getWeatherStatus(sky, pty));
 
         return result;
     }
