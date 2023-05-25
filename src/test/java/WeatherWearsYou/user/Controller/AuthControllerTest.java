@@ -7,32 +7,20 @@ import WeatherWearsYou.user.security.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -47,9 +35,6 @@ class AuthControllerTest {
 
     @Mock
     private UserRepo userRepository;
-
-    @Mock
-    private RoleRepo roleRepository;
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -71,10 +56,10 @@ class AuthControllerTest {
         loginRequest.setPassword("testPassword");
 
         signUpRequest = new SignUpRequest();
-        signUpRequest.setName("testName");
         signUpRequest.setUsername("testUsername");
         signUpRequest.setEmail("testEmail");
         signUpRequest.setPassword("testPassword");
+        signUpRequest.setGender("male");
     }
 
     @Test
@@ -94,10 +79,10 @@ class AuthControllerTest {
     public void testRegisterUser() throws Exception {
         // Create a signup request object
         SignUpRequest signUpRequest = new SignUpRequest();
-        signUpRequest.setName("User");
         signUpRequest.setUsername("testUser");
         signUpRequest.setPassword("testPassword");
         signUpRequest.setEmail("testEmail@test.com");
+        signUpRequest.setGender("male");
 
         // Convert signup request to JSON
         ObjectMapper objectMapper = new ObjectMapper();

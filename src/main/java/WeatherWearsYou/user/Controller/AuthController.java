@@ -1,11 +1,9 @@
 package WeatherWearsYou.user.Controller;
 
 import java.net.URI;
-import java.util.Collections;
-
 import javax.validation.Valid;
 
-import WeatherWearsYou.user.RoleRepo;
+import WeatherWearsYou.user.Gender;
 import WeatherWearsYou.user.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,14 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import WeatherWearsYou.user.exception.AppException;
 import WeatherWearsYou.user.security.JwtTokenProvider;
 import WeatherWearsYou.user.payloads.ApiResponse;
 import WeatherWearsYou.user.payloads.JwtAuthenticationResponse;
 import WeatherWearsYou.user.payloads.LoginRequest;
 import WeatherWearsYou.user.payloads.SignUpRequest;
-import WeatherWearsYou.user.Role;
-import WeatherWearsYou.user.RoleName;
 import WeatherWearsYou.user.User;
 
 
@@ -72,8 +67,8 @@ public class AuthController {
         }
 
         // Creating user's account
-        User user = new User(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getEmail(),
-                signUpRequest.getPassword());
+        User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
+                signUpRequest.getPassword(), Gender.valueOf(signUpRequest.getGender().toUpperCase()));
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

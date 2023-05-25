@@ -7,10 +7,6 @@ import javax.validation.constraints.Size;
 public class SignUpRequest {
 
     @NotBlank
-    @Size(min = 4, max = 40)
-    private String name;
-
-    @NotBlank
     @Size(min = 3, max = 15)
     private String username;
 
@@ -23,13 +19,8 @@ public class SignUpRequest {
     @Size(min = 6, max = 20)
     private String password;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    @NotBlank
+    private String gender;
 
     public String getUsername() {
         return username;
@@ -53,5 +44,13 @@ public class SignUpRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
