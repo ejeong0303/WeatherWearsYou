@@ -27,7 +27,6 @@ dependencies {
     implementation 'com.mounacheikhna.jsongenerator:jsongenerator:0.5'
 	implementation 'com.matrixshell:jsongenerator:0.0.3'
 	implementation 'com.paypal.selion:SeLion-Project-BOM:1.2.0'
-	implementation 'mysql:mysql-connector-j-8.0.33'
 	testImplementation 'org.projectlombok:lombok:1.18.26'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
