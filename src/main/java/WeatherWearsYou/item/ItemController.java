@@ -1,9 +1,12 @@
 package WeatherWearsYou.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -19,21 +22,23 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<Item> getItemsByFilter(@RequestParam String chatGPTResponse,
-                                       @RequestParam(required = false) Integer minPrice,
-                                       @RequestParam(required = false) Integer maxPrice,
-                                       @RequestParam(required = false) String style) throws IOException {
-        if (minPrice != null && maxPrice != null && style != null) {
-            return itemService.getItemsByChatGPTResponseAndStyleAndPriceRange(chatGPTResponse, style, minPrice, maxPrice);
+    public ResponseEntity<LinkedHashMap<String, Object>> getItemsByFilter(@RequestParam String chatGPTResponse,
+                                                                               @RequestParam(required = false) Integer minPrice,
+                                                                               @RequestParam(required = false) Integer maxPrice) throws IOException {
+        List<Item> items;
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+        if (minPrice != null && maxPrice != null) {
+            items = itemService.getItemsByChatGPTResponseAndPriceRange(chatGPTResponse, minPrice, maxPrice);
+        } else if (minPrice != null && maxPrice == null) {
+            items = itemService.getItemsByChatGPTResponseAndPriceRange(chatGPTResponse, minPrice, 10000000);
+        } else if (minPrice == null && maxPrice != null) {
+            items = itemService.getItemsByChatGPTResponseAndPriceRange(chatGPTResponse, -1, maxPrice);
+        }else {
+            items = itemService.getItemsByChatGPTResponse(chatGPTResponse);
         }
-        else if (minPrice != null && maxPrice != null) {
-            return itemService.getItemsByChatGPTResponseAndPriceRange(chatGPTResponse, minPrice, maxPrice);
-        }
-        else if (style != null) {
-            return itemService.getItemsByChatGPTResponseAndStyle(chatGPTResponse, style);
-        }
-        else {
-            return itemService.getItemsByChatGPTResponse(chatGPTResponse);
-        }
+        result.put("data", items);
+        result.put("count", items.size());
+
+        return ResponseEntity.ok().body(result);
     }
 }

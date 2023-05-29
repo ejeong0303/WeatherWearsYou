@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static WeatherWearsYou.item.Item.BOTTOM;
-import static WeatherWearsYou.item.Item.MALE;
+import static WeatherWearsYou.item.Item.*;
 
 public class ItemCrawling {
-    private static String category;
+    private static Integer category;
     private static String itemType;
+    private static Integer rank;
     private static int itemId;
     private static String itemName;
     private static Integer price;
@@ -26,101 +26,154 @@ public class ItemCrawling {
         WebDriver driver = setDriver.getChromeDriver();
         String url = "https://www.musinsa.com/app/";
         String tmpUrl;
+        String ctg;
+        Integer savedCnt;
+        Integer page;
 
-        driver.get(url);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        category = driver.findElement(By.id("ui-id-" + (categoryID - 1)))
-                .findElement(By.tagName("strong")).getAttribute("textContent");
+        //ctg = driver.findElement(By.id("ui-id-" + (categoryID - 1)))
+        //        .findElement(By.tagName("strong")).getAttribute("textContent");
 
-        List<WebElement> categories = driver.findElement(By.id("ui-id-" + categoryID))
-                .findElements(By.tagName("ul"));
-
-        //add "li"tags of types
-        List<WebElement> types = new ArrayList<>();
-        for (WebElement category : categories) {
-            types.addAll(category.findElements(By.tagName("li")));
+        switch(categoryID) {
+            case 4: category = TOP;
+            break;
+            case 6: category = OUTER;
+            break;
+            case 8:
+            case 12: category = BOTTOM;
+            break;
+            case 14:
+            case 16: category = SHOES;
+            break;
+            default: category = -1;
         }
 
-        //add all urls of types
-        List<String> typeUrls = new ArrayList<>();
-        for (WebElement type : types) {
-            tmpUrl = type.findElement(By.tagName("a")).getAttribute("href");
-            typeUrls.add(tmpUrl);
-        }
 
-        //traverse types
-        for(String typeUrl : typeUrls) {
-            driver.navigate().to(typeUrl);
-            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-            itemType = driver.findElement(By.xpath("//*[@id=\"location_category_2_depth\"]")).getText();
-
-            List<WebElement> products = driver.findElement(By.id("searchList"))
-                    .findElements(By.xpath("//*[@id=\"searchList\"]/li[position()<" + (productCnt + 1) + "]"));
-
-            //add all urls of products
-            List<String> productUrls = new ArrayList<>();
-            for(WebElement product : products) {
-                tmpUrl = product.findElement(By.tagName("a")).getAttribute("href");
-                productUrls.add(tmpUrl);
-            }
-
-            //traverse products
-            for(String productUrl : productUrls) {
-                driver.navigate().to(productUrl);
-                String[] array = productUrl.split("/");
-
-                itemId =  Integer.parseInt(array[5]);
+        savedCnt = productCnt;
+        page = 1;
+        while(savedCnt > 0) {
+            try {
+                driver.get(url);
                 driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
-                itemName = driver.findElement(By.xpath("//*[@id=\"page_product_detail\"]/div[3]/div[3]/span/em")).getText();
+                List<WebElement> categories = driver.findElement(By.id("ui-id-" + categoryID))
+                        .findElements(By.tagName("ul"));
 
-                imgLink = driver.findElement(By.xpath("//*[@id=\"detail_bigimg\"]/div"))
-                        .findElement(By.tagName("img")).getAttribute("src");
+                //add "li"tags of types
+                List<WebElement> types = new ArrayList<>();
+                for (WebElement category : categories) {
+                    types.addAll(category.findElements(By.tagName("li")));
+                }
 
-                try {
-                    String txt = driver.findElement(By.xpath("//*[@id=\"sPrice\"]/ul/li[1]/span[2]")).getAttribute("textContent");
-                    txt = txt.replaceAll("[^0-9]","");
-                    price = Integer.parseInt(txt);
-                } catch (Exception e) {
-                    WebElement tmp = driver.findElement(By.xpath("//*[@id=\"goods_price\"]"));
-                    String txt = tmp.getText().trim();
-                    List<WebElement> children = tmp.findElements(By.xpath("./*"));
-                    for (WebElement child : children)
-                    {
-                        txt = txt.replaceFirst(child.getText(), "").trim();
+                //add all urls of types
+                List<String> typeUrls = new ArrayList<>();
+                for (WebElement type : types) {
+                    tmpUrl = type.findElement(By.tagName("a")).getAttribute("href");
+                    ctg = tmpUrl.substring(tmpUrl.length() - 6, tmpUrl.length());
+                    typeUrls.add(tmpUrl + "?d_cat_cd=" + ctg +
+                            "&brand=&list_kind=small&sort=sale_high&sub_sort=1y&page=" + page +
+                            "&display_cnt=90&group_sale=&exclusive_yn=" +
+                            "&sale_goods=&timesale_yn=&ex_soldout=&plusDeliveryYn=&kids=&color=&price1=&price2=" +
+                            "&shoeSizeOption=&tags=&campaign_id=&includeKeywords=&measure=");
+                }
+
+                //traverse types
+                for (String typeUrl : typeUrls) {
+                    try {
+                        rank = 1;
+                        driver.navigate().to(typeUrl);
+                        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+                        itemType = driver.findElement(By.xpath("//*[@id=\"location_category_2_depth\"]")).getText();
+
+                        List<WebElement> products = driver.findElement(By.id("searchList"))
+                                .findElements(By.xpath("//*[@id=\"searchList\"]/li[position()<" + (productCnt + 1) + "]"));
+
+                        //add all urls of products
+                        List<String> productUrls = new ArrayList<>();
+                        for (WebElement product : products) {
+                            tmpUrl = product.findElement(By.tagName("a")).getAttribute("href");
+                            productUrls.add(tmpUrl);
+                        }
+
+                        //traverse products
+                        for (String productUrl : productUrls) {
+                            try {
+                                driver.navigate().to(productUrl);
+                                String[] array = productUrl.split("/");
+
+                                itemId = Integer.parseInt(array[5]);
+                                driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+                                itemName = driver.findElement(By.xpath("//*[@id=\"page_product_detail\"]/div[3]/div[3]/span/em")).getText();
+
+                                imgLink = driver.findElement(By.xpath("//*[@id=\"detail_bigimg\"]/div"))
+                                        .findElement(By.tagName("img")).getAttribute("src");
+
+                                try {
+                                    String txt = driver.findElement(By.xpath("//*[@id=\"sPrice\"]/ul/li[1]/span[2]")).getAttribute("textContent");
+                                    txt = txt.replaceAll("[^0-9]", "");
+                                    price = Integer.parseInt(txt);
+                                } catch (Exception e) {
+                                    try {
+                                        WebElement tmp = driver.findElement(By.xpath("//*[@id=\"goods_price\"]"));
+                                        String txt = tmp.getText().trim();
+                                        List<WebElement> children = tmp.findElements(By.xpath("./*"));
+                                        for (WebElement child : children) {
+                                            txt = txt.replaceFirst(child.getText(), "").trim();
+                                        }
+                                        txt = txt.replaceAll("[^0-9]", "");
+                                        price = Integer.parseInt(txt);
+                                    } catch (Exception f) {
+                                        try {
+                                            String txt = driver.findElement(By.xpath("//*[@id=\"product_order_info\"]/div[4]/ul/li[3]/div/span[1]")).getAttribute("textContent");
+                                            txt = txt.replaceAll("[^0-9]", "");
+                                            price = Integer.parseInt(txt);
+                                        } catch (Exception g) {
+                                            continue;
+                                        }
+                                    }
+                                }
+
+                                List<WebElement> genders = driver.findElement(By.className("txt_gender")).findElements(By.tagName("span"));
+                                if (genders.size() == 2) {
+                                    gender = 2;
+                                } else if (genders.get(0).getText().equals("남")) {
+                                    gender = 0;
+                                } else {
+                                    gender = 1;
+                                }
+                                try {
+                                    List<WebElement> styletags = driver.findElement(By.cssSelector(".article-tag-list.list"))
+                                            .findElement(By.tagName("p")).findElements(By.tagName("a"));
+                                    tags = "";
+                                    for (WebElement tag : styletags) {
+                                        tags = tags + tag.getAttribute("textContent");
+                                    }
+                                } catch (Exception e) {
+                                    tags = "";
+                                }
+
+                                Item item = new Item(itemId, category, rank, itemType, itemName, price, gender, imgLink, tags);
+                                itemRepository.save(item);
+
+                                System.out.println("product Name : " + itemName);
+                                rank++;
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                rank++;
+                                continue;
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        continue;
                     }
-                    txt = txt.replaceAll("[^0-9]","");
-                    price = Integer.parseInt(txt);
                 }
-
-                List<WebElement> genders = driver.findElement(By.className("txt_gender")).findElements(By.tagName("span"));
-                if(genders.size() == 2) {
-                    gender = 2;
-                }
-                else if(genders.get(0).getText().equals("남")){
-                    gender = 0;
-                }
-                else {
-                    gender = 1;
-                }
-
-                List<WebElement> styletags = driver.findElement(By.cssSelector(".article-tag-list.list"))
-                        .findElement(By.tagName("p")).findElements(By.tagName("a"));
-                tags = "";
-                for (WebElement tag : styletags)
-                {
-                    tags = tags + tag.getAttribute("textContent");
-                }
-                Item item = new Item(itemId, categoryID, itemType, itemName, price, gender, imgLink, tags);
-                itemRepository.save(item);
-
-
-                System.out.println("product Name : " + itemName);
-                //System.out.println("taglist :" + tags);
-                //System.out.println("product ID : " + itemId);
-                //System.out.println("product img : " + imgLink);
-                //System.out.println("product price : " + price);
-                //System.out.println("product gender : " + gender);
+                page++;
+                savedCnt -= 90;
+            } catch (Exception e) {
+                e.printStackTrace();
+                page++;
+                continue;
             }
         }
         driver.quit();

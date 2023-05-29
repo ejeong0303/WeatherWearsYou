@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://127.0.0.1:5000")
 @RestController
 public class ChatGptController {
 
@@ -62,13 +62,23 @@ public class ChatGptController {
             String city = dto.getCity(); // Get the city information from the frontend
             String gender = dto.getGender(); // Get the gender information from the frontend
             String targetDate = dto.getTargetDate(); // Get the target date information from the frontend
-            LinkedHashMap<String, Object> weatherData = weatherController.getWeatherForDate(city, targetDate);
-            String modifiedPrompt = String.format("%s,%s,%s,%s,%s,%s",
-                    gender, targetDate,
-                    weatherData.get("precipitationRate"),
-                    weatherData.get("weather"),
-                    weatherData.get("minTemp"),
-                    weatherData.get("maxTemp"));
+            String modifiedPrompt;
+            if(dto.getWeather() == null) {
+                LinkedHashMap<String, Object> weatherData = weatherController.getWeatherForDate(city, targetDate);
+                modifiedPrompt = String.format("%s,%s,%s,%s,%s,%s",
+                        gender, targetDate,
+                        weatherData.get("precipitationRate"),
+                        weatherData.get("weather"),
+                        weatherData.get("minTemp"),
+                        weatherData.get("maxTemp"));
+            } else {
+                modifiedPrompt = String.format("%s,%s,%s,%s,%s,%s",
+                        gender, targetDate,
+                        dto.getPrecipitationRate(),
+                        dto.getWeather(),
+                        dto.getMinTemp(),
+                        dto.getMaxTemp());
+            }
             String response;
             if (dto.getStyle() == null) {
                 response = chatWithGpt3(modifiedPrompt.split(","), null);
@@ -83,7 +93,7 @@ public class ChatGptController {
             String[] categoriesKeys = {"Top", "Bottom", "Outer", "Shoes"};
 
             for (int i = 0; i < categories.length; i++) {
-                String[] items = categories[i].substring(categories[i].indexOf(":") + 1).trim().split(",\\s*");
+                String[] items = categories[i].substring(categories[i].indexOf(":") + 2).trim().split("#");
                 results.put(categoriesKeys[i], new ArrayList<>(Arrays.asList(items)));
             }
 

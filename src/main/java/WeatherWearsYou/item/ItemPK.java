@@ -8,6 +8,6 @@ import java.io.Serializable;
 
 @Data
 public class ItemPK  implements Serializable {
-    private Integer id;
     private Integer category;
+    private Integer id;
 }

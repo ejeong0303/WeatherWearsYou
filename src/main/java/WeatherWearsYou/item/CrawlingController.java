@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @Transactional
@@ -22,6 +25,15 @@ public class CrawlingController {
         return "saved";
     }
 
+    @PostMapping(path="/add/all")
+    public @ResponseBody String addItem(@RequestParam Integer productCnt) throws InterruptedException {
+        List<Integer> categories = Arrays.asList(4, 6, 8, 12, 14, 16);
+
+        for(Integer category : categories) {
+            ItemCrawling.doCrawlingByCategoryID(category, productCnt, itemRepository);
+        }
+        return "saved";
+    }
 
     /*
     @PostMapping(path="/add") // Map ONLY POST Requests
@@ -47,7 +59,6 @@ public class CrawlingController {
 
         return "Saved";
     }
-
      */
 
     @GetMapping(path="/all")
@@ -56,9 +67,10 @@ public class CrawlingController {
         return itemRepository.findAll();
     }
 
+    /*
     @PostMapping(path="/name")
     public @ResponseBody Iterable<Item> getByName(@RequestParam String name) {
         return itemRepository.getContainingItem(name);
     }
-
+     */
 }

@@ -32,7 +32,7 @@ public class setDriver {
         options.setCapability("ignoreProtectedModeSettings", true);
 
         WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
 
         return driver;
     }

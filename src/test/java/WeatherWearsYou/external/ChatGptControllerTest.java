@@ -12,7 +12,8 @@ public class ChatGptControllerTest {
         // Manually create instances of required dependencies
         ObjectMapper jsonMapper = new ObjectMapper();
         OpenAiApiClient client = new OpenAiApiClient(); // You may need to set the API key manually
-        client.setOpenaiApiKey("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"); // Replace with your actual API key
+        client.setOpenaiApiKey("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"); // Replace with your actual API key
+
 
 
         WeatherController weatherController = new WeatherController(); // You may need to set the API key manually
@@ -27,7 +28,7 @@ public class ChatGptControllerTest {
         FormInputDTO dto = new FormInputDTO();
         dto.setCity("gangwon");
         dto.setGender("male");
-        dto.setTargetDate("20230522");
+        dto.setTargetDate("20230528");
         dto.setStyle("Sporty"); // Set the style value
         ResponseEntity<byte[]> response = chatGptController.chat(dto);
 

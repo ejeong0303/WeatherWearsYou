@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "items")
 @NoArgsConstructor
 @IdClass(ItemPK.class)
-public class Item {
+public class Item implements Comparable<Item>{
     public static int TOP = 0;
     public static int BOTTOM = 1;
     public static int OUTER = 2;
@@ -25,6 +25,9 @@ public class Item {
     @Column(name = "category", nullable = false)
     private Integer category;
 
+    @Column(name = "itemRank", nullable = false)
+    private Integer itemRank;
+
     @Column(name = "itemType", nullable = false, length = 30)
     private String itemType;
 
@@ -32,6 +35,7 @@ public class Item {
     private String name;
 
     @Column(name = "price", nullable = false)
+
     private Integer price;
 
     //male:0 female:1 unisex:2
@@ -46,9 +50,10 @@ public class Item {
 
     // Constructors
 
-    public Item(Integer id, Integer category, String itemType, String name, Integer price, Integer gender, String imgLink, String style) {
+    public Item(Integer id, Integer category, Integer itemRank, String itemType, String name, Integer price, Integer gender, String imgLink, String style) {
         this.id = id;
         this.category = category;
+        this.itemRank = itemRank;
         this.itemType = itemType;
         this.name = name;
         this.price = price;
@@ -63,6 +68,8 @@ public class Item {
     }
 
     public Integer getCategory() { return category; }
+
+    public Integer getItemRank() { return itemRank; }
 
     public String getItemType() {
         return itemType;
@@ -97,6 +104,8 @@ public class Item {
         this.category = category;
     }
 
+    public void setItemRank(Integer itemRank) { this.itemRank = itemRank; }
+
     public void setItemType(String itemType) {
         this.itemType = itemType;
     }
@@ -116,4 +125,14 @@ public class Item {
     public void setImgLink(String imgLink) { this.imgLink = imgLink; }
 
     public void setStyle(String style) { this.style = style; }
+
+    @Override
+    public int compareTo(Item item) {
+        if (item.itemRank < itemRank) {
+            return 1;
+        } else if (item.itemRank > itemRank) {
+            return -1;
+        }
+        return 0;
+    }
 }

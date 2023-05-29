@@ -1,6 +1,6 @@
 package WeatherWearsYou.item;
 
-public class CrawlTest {
+public class CrawlingTest {
     public static final int ITEM_NUM = 5;
 
     public static void main(String[] args) throws InterruptedException {
