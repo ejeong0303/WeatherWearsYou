@@ -17,6 +17,7 @@ public class WeatherControllerTest {
         String cityName = "jeju";
         String targetDate = "20230529"; // Replace with your target date in "yyyy.MM.dd" format
 
+
         try {
             System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
             LinkedHashMap<String, Object> weatherData = weatherController.getWeatherForDate(cityName, targetDate);

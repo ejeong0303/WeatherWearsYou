@@ -13,7 +13,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin(origins = "http://127.0.0.1:5000")
+
+@CrossOrigin(origins = "http://localhost:5000")
 @RestController
 public class WeatherController {
 
@@ -51,6 +52,8 @@ public class WeatherController {
         } else {
             throw new IllegalArgumentException("Target date must be within 10 days from today.");
         }
+
+
 
         return result;
     }
