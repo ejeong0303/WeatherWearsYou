@@ -19,9 +19,6 @@ public class SignUpRequest {
     @Size(min = 6, max = 20)
     private String password;
 
-    @NotBlank
-    private String gender;
-
     public String getUsername() {
         return username;
     }
@@ -46,11 +43,4 @@ public class SignUpRequest {
         this.password = password;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
 }

@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import WeatherWearsYou.user.User;
 
 public class UserPrincipal implements UserDetails {
-
     private Long id;
 
     private String username;
@@ -51,7 +50,6 @@ public class UserPrincipal implements UserDetails {
         return password;
     }
 
-    // Removed getAuthorities method
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();

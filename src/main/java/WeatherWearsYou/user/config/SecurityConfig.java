@@ -20,7 +20,6 @@ import WeatherWearsYou.user.security.JwtAuthenticationFilter;
 import WeatherWearsYou.user.security.CustomUserDetailsService;
 import WeatherWearsYou.user.security.JwtAuthenticationEntryPoint;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -47,7 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
-
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -90,6 +88,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
     }
 }

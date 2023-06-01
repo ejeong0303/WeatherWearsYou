@@ -29,14 +29,12 @@ public class OpenAiApiClient {
     public enum OpenAiService {
         DALL_E, GPT_3;
     }
-
     @Value("${openai.api_key}")
     private String openaiApiKey;
 
     public void setOpenaiApiKey(String openaiApiKey) {
         this.openaiApiKey = openaiApiKey;
     }
-
 
     public byte[] postToOpenAiApi(String requestBodyAsJson, OpenAiService service) throws IOException, InterruptedException {
         var request = HttpRequest.newBuilder().uri(selectUri(service))
@@ -82,6 +80,5 @@ public class OpenAiApiClient {
             throw new RuntimeException("Error creating insecure HTTP client", e);
         }
     }
-
 }
 

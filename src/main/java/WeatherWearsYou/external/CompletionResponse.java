@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record CompletionResponse(Usage usage, List<Choice> choices) {
-
     public Optional<String> firstAnswer() {
         if (choices == null || choices.isEmpty())
             return Optional.empty();

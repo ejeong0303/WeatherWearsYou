@@ -53,8 +53,6 @@ public class WeatherController {
             throw new IllegalArgumentException("Target date must be within 10 days from today.");
         }
 
-
-
         return result;
     }
 }

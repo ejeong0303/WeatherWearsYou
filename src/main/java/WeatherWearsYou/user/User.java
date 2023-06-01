@@ -1,6 +1,5 @@
 package WeatherWearsYou.user;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,8 +8,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 import org.hibernate.annotations.NaturalId;
 
@@ -35,18 +32,16 @@ public class User {
     @NotBlank
     @Size(max = 100)
     private String password;
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
 
     public User() {
 
     }
 
-    public User(String username, String email, String password, Gender gender) {
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.gender = gender;
+        //this.gender = gender;
     }
 
     public Long getId() {
@@ -80,13 +75,4 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
 }

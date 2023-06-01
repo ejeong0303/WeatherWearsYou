@@ -34,6 +34,4 @@ public record CompletionRequest(String model, String prompt, double temperature,
                 words[0], styleText,  words[1], words[2], words[3], words[4], words[5]);
         return new CompletionRequest("text-davinci-003", prompt, 0.7, 500);
     }
-
-
 }

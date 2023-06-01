@@ -3,7 +3,6 @@ package WeatherWearsYou.user.Controller;
 import java.net.URI;
 import javax.validation.Valid;
 
-import WeatherWearsYou.user.Gender;
 import WeatherWearsYou.user.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +24,6 @@ import WeatherWearsYou.user.payloads.JwtAuthenticationResponse;
 import WeatherWearsYou.user.payloads.LoginRequest;
 import WeatherWearsYou.user.payloads.SignUpRequest;
 import WeatherWearsYou.user.User;
-
-
 
 @RestController
 @RequestMapping("/api/auth")
@@ -67,8 +64,7 @@ public class AuthController {
         }
 
         // Creating user's account
-        User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
-                signUpRequest.getPassword(), Gender.valueOf(signUpRequest.getGender().toUpperCase()));
+        User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(), signUpRequest.getPassword());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
