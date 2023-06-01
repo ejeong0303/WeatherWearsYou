@@ -54,9 +54,16 @@ public class ItemService {
                 } else {
                     String[] tags = itemType.substring(idx + 1).trim().split(",\\s*");
                     itemType = itemType.substring(0, idx);
+                    List<Item> temp2 = new ArrayList<>();
                     for (String tag : tags) {
                         tag = tag.replace(")", "");
-                        temp.addAll(itemRepository.getItemsByTag(categoryID, itemType, tag));
+                        temp2.addAll(itemRepository.getItemsByTag(categoryID, itemType, tag));
+                    }
+                    Collections.sort(temp2);
+                    if(temp2.size() < 5) {
+                        temp.addAll(temp2);
+                    } else {
+                        temp.addAll(temp2.subList(0, 4));
                     }
                 }
             }
