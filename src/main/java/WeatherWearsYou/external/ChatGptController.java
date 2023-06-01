@@ -96,6 +96,7 @@ public class ChatGptController {
                 String[] items = categories[i].substring(categories[i].indexOf(":") + 2).trim().split("#");
                 results.put(categoriesKeys[i], new ArrayList<>(Arrays.asList(items)));
             }
+            System.out.println(results);
 
             String jsonResponse = jsonMapper.writeValueAsString(results);
             byte[] jsonResponseBytes = jsonResponse.getBytes(StandardCharsets.UTF_8);
