@@ -1,6 +1,7 @@
 package WeatherWearsYou.user.payloads;
 
 public class JwtAuthenticationResponse {
+
     private String accessToken;
     private String tokenType = "Bearer";
 

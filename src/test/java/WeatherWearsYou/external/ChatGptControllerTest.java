@@ -12,7 +12,7 @@ public class ChatGptControllerTest {
         // Manually create instances of required dependencies
         ObjectMapper jsonMapper = new ObjectMapper();
         OpenAiApiClient client = new OpenAiApiClient(); // You may need to set the API key manually
-        client.setOpenaiApiKey("current key"); // Replace with your actual API key
+        client.setOpenaiApiKey("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"); // Replace with your actual API key
 
 
 

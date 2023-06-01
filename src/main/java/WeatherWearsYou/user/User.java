@@ -1,10 +1,6 @@
 package WeatherWearsYou.user;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -33,15 +29,27 @@ public class User {
     @Size(max = 100)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = Gender.valueOf(gender);
+    }
+
+
     public User() {
 
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, String gender) {
         this.username = username;
         this.email = email;
         this.password = password;
-        //this.gender = gender;
+        this.gender = Gender.valueOf(gender);
     }
 
     public Long getId() {

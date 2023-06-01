@@ -24,6 +24,7 @@ import javax.crypto.spec.SecretKeySpec;
 @Service
 @Component
 public class JwtTokenProvider {
+
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
     private SecretKey jwtSecret;
@@ -31,6 +32,7 @@ public class JwtTokenProvider {
     @Value("${app.jwtExpirationInMs}")
     private int jwtExpirationInMs;
 
+    // constructor to generate or retrieve the key
     public JwtTokenProvider() {
         String encodedKey = System.getenv("JWT_SECRET");
         if (encodedKey == null) {

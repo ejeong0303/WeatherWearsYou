@@ -5,12 +5,7 @@ public record CompletionRequest(String model, String prompt, double temperature,
     public static CompletionRequest defaultWith(String[] words, String style) {
 
         String styleText = style == null ? "" : " " + style + " style";
-        /*String prompt = String.format("Recommend me the trendy south korean style clothing that best fits the weather%s. Give me a word(don't describe with adjectives or colors) for each category " +
-                        "(outer, top, bottom, and shoes with 3 examples each) in a comma-separated list for a " +
-                        "%s in Seoul on %s with probability of precipitation %s%% , %s weather, lowest temperature %s degree celsius and highest temperature %s degree celsius. " +
-                        "Give me only the list, don't tell me additional notes. Also provide each outer, top, bottom, and shoes in separate lines.",
-                // Please provide responses except outer, top, bottom, and shoes in korean
-                styleText, words[0], words[1], words[2], words[3], words[4], words[5]);*/
+
         String prompt = String.format("The available options for itemtypes for each category are the following. I want you to parse through all options and choose the items that best fits the instructions.\n"+
                                 "Top\n"+
                                 "ItemTypes: 셔츠/블라우스(크롭, 오버핏, 옥스포드, 린넨, 자수, 프릴), 민소매 티셔츠(레이어드, 크롭, 탱크탑, 뷔스티에, 골지), 긴소매 티셔츠(크롭, 오버핏, 래글런, 텐셀, 릴렉스드), 니트/스웨터(하프집업니트, 카라니트, 니트베스트, 크롭니트, 크롭 오프숄더, 린넨, 부클, 풀오버, 슬릿), 반소매 티셔츠(그래픽, 로고/레터링, 무지, 크롭, 오버핏, 자수), 맨투맨/스웨트셔츠(크롭, 오버핏, 무지, 셋업, 로고, 하프집업, 베이식, 그래픽),  기타상의(크롭, 하프집업, 탱크탑, 오버핏, 자수), 피케/카라 티셔츠, 후드 티셔츠(로고, 그래픽, 베이식, 하프집업, 크롭), 스포츠상의\n"+

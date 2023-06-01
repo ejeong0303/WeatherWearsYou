@@ -50,6 +50,7 @@ public class UserPrincipal implements UserDetails {
         return password;
     }
 
+    // Removed getAuthorities method
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();

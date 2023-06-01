@@ -3,6 +3,7 @@ package WeatherWearsYou.user.payloads;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
+
     @NotBlank
     private String usernameOrEmail;
 
