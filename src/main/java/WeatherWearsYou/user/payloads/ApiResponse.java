@@ -1,7 +1,6 @@
 package WeatherWearsYou.user.payloads;
 
 public class ApiResponse {
-
     private Boolean success;
     private String message;
 

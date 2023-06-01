@@ -45,7 +45,7 @@ public class ItemControllerTest {
         itemService = new ItemService(itemRepository, new ObjectMapper());
         ItemController itemController = new ItemController(itemService);
 
-        ResponseEntity<LinkedHashMap<String, Object>> result = itemController.getItemsByFilter(chatGPTResponse, null, null);
+        ResponseEntity<LinkedHashMap<String, Object>> result = itemController.getItemsByFilter(chatGPTResponse, null, null, "female");
 
         System.out.println("Response:");
 

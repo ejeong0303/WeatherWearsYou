@@ -12,7 +12,6 @@ import WeatherWearsYou.user.UserRepo;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-
     @Autowired
     UserRepo userRepository;
 
@@ -26,7 +25,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         return UserPrincipal.create(user);
     }
 
-    // This method is used by JWTAuthenticationFilter
     @Transactional
     public UserDetails loadUserById(Long id) {
         User user = userRepository.findById(id)

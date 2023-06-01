@@ -22,7 +22,6 @@ import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
-
 @CrossOrigin(origins = "http://localhost:5000")
 @RestController
 public class ChatGptController {
@@ -51,7 +50,6 @@ public class ChatGptController {
         var completionResponse = jsonMapper.readValue(new String(responseBody, StandardCharsets.UTF_8), CompletionResponse.class);
         return completionResponse.firstAnswer().orElseThrow();
     }
-
 
     @PostMapping(path = "/")
     public ResponseEntity<byte[]> chat(@ModelAttribute FormInputDTO dto) {

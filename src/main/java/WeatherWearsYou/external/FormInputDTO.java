@@ -1,5 +1,4 @@
 package WeatherWearsYou.external;
-
 public class FormInputDTO {
     private String city;
     private String gender;
