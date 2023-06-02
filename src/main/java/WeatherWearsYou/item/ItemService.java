@@ -49,7 +49,7 @@ public class ItemService {
             for (String itemType : itemTypes) {
                 int idx = itemType.indexOf("(");
                 if (idx == -1) { //no detail hashtag
-                    temp.addAll(itemRepository.getItems(categoryID, itemType, gen));
+                    temp.addAll(itemRepository.getItems(categoryID, itemType, gen, 4));
                 } else {
                     String[] tags = itemType.substring(idx + 1).trim().split(",\\s*");
                     itemType = itemType.substring(0, idx);
@@ -58,10 +58,11 @@ public class ItemService {
                         tag = tag.replace(")", "");
                         temp2.addAll(itemRepository.getItemsByTag(categoryID, itemType, tag, gen));
                     }
-                    Collections.sort(temp2);
-                    if(temp2.size() < 5) {
+                    if(temp2.size() < 4) {
+                        temp2.addAll(itemRepository.getItems(categoryID, itemType, gen, 4-temp2.size()));
                         temp.addAll(temp2);
                     } else {
+                        Collections.sort(temp2);
                         temp.addAll(temp2.subList(0, 4));
                     }
                 }
@@ -106,14 +107,23 @@ public class ItemService {
             for (String itemType : itemTypes) {
                 int idx = itemType.indexOf("(");
                 if (idx == -1) { //no detail hashtag
-                    temp.addAll(itemRepository.getItemsByPrice(categoryID, itemType, minPrice, maxPrice, gen));
+                    temp.addAll(itemRepository.getItemsByPrice(categoryID, itemType, minPrice, maxPrice, gen, 4));
                 } else {
                     String[] tags = itemType.substring(idx + 1).trim().split(",\\s*");
                     itemType = itemType.substring(0, idx);
+                    List<Item> temp2 = new ArrayList<>();
                     for (String tag : tags) {
                         tag = tag.replace(")", "");
-                        temp.addAll(itemRepository.getItemsByTagAndPrice(categoryID, itemType, tag, minPrice, maxPrice, gen));
+                        temp2.addAll(itemRepository.getItemsByTagAndPrice(categoryID, itemType, tag, minPrice, maxPrice, gen));
                     }
+                    if(temp2.size() < 4) {
+                        temp2.addAll(itemRepository.getItemsByPrice(categoryID, itemType, minPrice, maxPrice, gen, 4 - temp2.size()));
+                    } else {
+                        Collections.sort(temp2);
+                        temp2 = temp2.subList(0,4);
+                    }
+
+                    temp.addAll(temp2);
                 }
             }
             Set<Item> set = new HashSet<Item>(temp);
