@@ -63,21 +63,24 @@ public class ChatGptController {
             String gender = dto.getGender(); // Get the gender information from the frontend
             String targetDate = dto.getTargetDate(); // Get the target date information from the frontend
             String modifiedPrompt;
+            String maxTemp = null;
             if(dto.getWeather() == null) {
                 LinkedHashMap<String, Object> weatherData = weatherController.getWeatherForDate(city, targetDate);
+                maxTemp = Integer.toString((Integer) weatherData.get("maxTemp"));
                 modifiedPrompt = String.format("%s,%s,%s,%s,%s,%s",
                         gender, targetDate,
                         weatherData.get("precipitationRate"),
                         weatherData.get("weather"),
                         weatherData.get("minTemp"),
-                        weatherData.get("maxTemp"));
+                        maxTemp);
             } else {
+                maxTemp = dto.getMaxTemp();
                 modifiedPrompt = String.format("%s,%s,%s,%s,%s,%s",
                         gender, targetDate,
                         dto.getPrecipitationRate(),
                         dto.getWeather(),
                         dto.getMinTemp(),
-                        dto.getMaxTemp());
+                        maxTemp);
             }
             String response;
             if (dto.getStyle() == null) {
@@ -96,6 +99,12 @@ public class ChatGptController {
                 String[] items = categories[i].substring(categories[i].indexOf(":") + 2).trim().split("#");
                 results.put(categoriesKeys[i], new ArrayList<>(Arrays.asList(items)));
             }
+
+            // Remove 'Outer' if max temperature is >= 26
+            if (maxTemp != null && Double.parseDouble(maxTemp) >= 26) {
+                results.remove("Outer");
+            }
+
             System.out.println(results);
 
             String jsonResponse = jsonMapper.writeValueAsString(results);
