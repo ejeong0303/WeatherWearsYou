@@ -5,6 +5,8 @@ public class JwtAuthenticationResponse {
     private String accessToken;
     private String tokenType = "Bearer";
 
+    private String gender;
+
     public JwtAuthenticationResponse(String accessToken) {
         this.accessToken = accessToken;
     }
@@ -23,5 +25,13 @@ public class JwtAuthenticationResponse {
 
     public void setTokenType(String tokenType) {
         this.tokenType = tokenType;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getGender() {
+        return gender;
     }
 }

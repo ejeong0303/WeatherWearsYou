@@ -1,9 +1,12 @@
 package WeatherWearsYou.user.Controller;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 import javax.validation.Valid;
 
 import WeatherWearsYou.user.UserRepo;
+import WeatherWearsYou.user.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,9 +53,26 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        // Get the authenticated user's details
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+
+        // Find the user in the database to get the gender
+        User user = userRepository.findById(principal.getId())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with id : " + principal.getId()));
+
+        // Get the user's gender
+        String gender = user.getGender().name();
+
+        // Generate the JWT
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+
+        // Create a new response with the JWT and the gender
+        JwtAuthenticationResponse response = new JwtAuthenticationResponse(jwt);
+        response.setGender(gender);
+
+        return ResponseEntity.ok(response);
     }
+
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {

@@ -15,7 +15,7 @@ public class WeatherControllerTest {
     public static void main(String[] args) {
         WeatherController weatherController = new WeatherController();
         String cityName = "jeju";
-        String targetDate = "20230529"; // Replace with your target date in "yyyy.MM.dd" format
+        String targetDate = "20230607"; // Replace with your target date in "yyyy.MM.dd" format
 
 
         try {
