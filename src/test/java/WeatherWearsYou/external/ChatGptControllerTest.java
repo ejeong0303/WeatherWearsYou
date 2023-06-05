@@ -29,9 +29,9 @@ public class ChatGptControllerTest {
         // Call the chat method with a FormInputDTO containing the city, gender, target date, and style
         FormInputDTO dto = new FormInputDTO();
         dto.setCity("gangwon");
-        dto.setGender("male");
-        dto.setTargetDate("20230604");
-        dto.setStyle("Sporty"); // Set the style value
+        dto.setGender("female");
+        dto.setTargetDate("20230613");
+        dto.setStyle("girlish lovely"); // Set the style value
         ResponseEntity<byte[]> response = chatGptController.chat(dto);
 
         // Print the response

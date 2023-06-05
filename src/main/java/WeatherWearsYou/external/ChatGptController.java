@@ -97,7 +97,11 @@ public class ChatGptController {
 
             for (int i = 0; i < categories.length; i++) {
                 String[] items = categories[i].substring(categories[i].indexOf(":") + 2).trim().split("#");
-                results.put(categoriesKeys[i], new ArrayList<>(Arrays.asList(items)));
+                List<String> translatedItems = new ArrayList<>();
+                for (String item : items) {
+                    translatedItems.add(TranslationUtil.translateEngToKor(item));
+                }
+                results.put(categoriesKeys[i], translatedItems);
             }
 
             // Remove 'Outer' if max temperature is >= 26
