@@ -13,7 +13,7 @@ public class ChatGptControllerTest {
         ObjectMapper jsonMapper = new ObjectMapper();
         OpenAiApiClient client = new OpenAiApiClient(); // You may need to set the API key manually
 
-        client.setOpenaiApiKey("current key"); // Replace with your actual API key
+        client.setOpenaiApiKey("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"); // Replace with your actual API key
 
 
 
@@ -24,7 +24,7 @@ public class ChatGptControllerTest {
         ChatGptController chatGptController = new ChatGptController();
         chatGptController.setJsonMapper(jsonMapper);
         chatGptController.setClient(client);
-        chatGptController.setWeatherController(weatherController);
+        //chatGptController.setWeatherController(weatherController);
 
         // Call the chat method with a FormInputDTO containing the city, gender, target date, and style
         FormInputDTO dto = new FormInputDTO();
@@ -32,6 +32,10 @@ public class ChatGptControllerTest {
         dto.setGender("female");
         dto.setTargetDate("20230613");
         dto.setStyle("girlish lovely"); // Set the style value
+        dto.setMaxTemp("27");
+        dto.setMinTemp("15");
+        dto.setPrecipitationRate("30");
+        dto.setWeather("blurry");
         ResponseEntity<byte[]> response = chatGptController.chat(dto);
 
         // Print the response
