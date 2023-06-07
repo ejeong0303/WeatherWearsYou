@@ -106,9 +106,9 @@ public record CompletionRequest(String model, String prompt, double temperature,
         String styleText = style == null ? "" : " " + style + " style";
         String randomOrder = setOrder();
 
-        String prompt = String.format("The available options for ItemTypes for each category are the following. Parse all options randomly and choose the items that best fits the instructions based on style, weather, gender.\n"+
+        String prompt = String.format("The available options for ItemTypes for each top, bottom, outer, shoes are the following. Parse all options randomly and choose the items that best fits the instructions based on style, weather, gender.\n"+
                                 "%s" +
-                                "The response must be a list separated by '#', with no additional notes. " +
+                                "The response must be a list separated by '#', must be fully lower case, and without additional notes. " +
                                 "The response format is the following.\n" +
                                 "Top:#[Top_Item1]#[Top_Item2]#[Top_Item3]\n" +
                                 "Bottom:#[Bottom_Item1]#[Bottom_Item2]#[Bottom_Item3]\n" +
@@ -116,7 +116,7 @@ public record CompletionRequest(String model, String prompt, double temperature,
                                 "Shoes:#[Shoes_Item1]#[Shoes_Item2]#[Shoes_Item3]\n Choose the 3 ItemTypes from each categories to generate a recommendation for %s, " +
                         "that best fits %s in the weather on %s with probability of precipitation %s%%, %s weather, lowest temperature %s degree celsius and highest temperature %s degree celsius. " +
                         "(If the chosen ItemType has an additional keyword in the brackets behind the ItemType, it is optional to choose one of them with the ItemType.)" +
-                        " In the response, the additional chosen keyword in brackets should be placed behind each ItemType inside the brackets. " +
+                        " In the response, the chosen 'additional keyword' in brackets should be placed behind each ItemType inside the brackets. " +
                         "Just give me the list of items without the additional notes or apologies.",
 
                 randomOrder, words[0], styleText,  words[1], words[2], words[3], words[4], words[5]);

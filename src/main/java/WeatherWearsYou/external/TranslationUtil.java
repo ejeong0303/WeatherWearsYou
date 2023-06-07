@@ -15,12 +15,12 @@ public class TranslationUtil {
             new SimpleImmutableEntry<>("shirts/blouse", "셔츠/블라우스"),
 
 
-            new SimpleImmutableEntry<>("long-sleeve T-shirts(cropped)", "긴소매 티셔츠(크롭)"),
-            new SimpleImmutableEntry<>("long-sleeve T-shirts(overfit)", "긴소매 티셔츠(오버핏)"),
-            new SimpleImmutableEntry<>("long-sleeve T-shirts(raglan)", "긴소매 티셔츠(래글런)"),
-            new SimpleImmutableEntry<>("long-sleeve T-shirts(tencel)", "긴소매 티셔츠(텐셀)"),
-            new SimpleImmutableEntry<>("long-sleeve T-shirts(relaxed)", "긴소매 티셔츠(릴렉스드)"),
-            new SimpleImmutableEntry<>("long-sleeve T-shirts", "긴소매 티셔츠"),
+            new SimpleImmutableEntry<>("long-sleeve t-shirts(cropped)", "긴소매 티셔츠(크롭)"),
+            new SimpleImmutableEntry<>("long-sleeve t-shirts(overfit)", "긴소매 티셔츠(오버핏)"),
+            new SimpleImmutableEntry<>("long-sleeve t-shirts(raglan)", "긴소매 티셔츠(래글런)"),
+            new SimpleImmutableEntry<>("long-sleeve t-shirts(tencel)", "긴소매 티셔츠(텐셀)"),
+            new SimpleImmutableEntry<>("long-sleeve t-shirts(relaxed)", "긴소매 티셔츠(릴렉스드)"),
+            new SimpleImmutableEntry<>("long-sleeve t-shirts", "긴소매 티셔츠"),
 
             new SimpleImmutableEntry<>("knit/sweater(half zip-up knit)", "니트/스웨터(하프집업니트)"),
             new SimpleImmutableEntry<>("knit/sweater(collar knit)", "니트/스웨터(카라니트)"),
@@ -33,13 +33,13 @@ public class TranslationUtil {
             new SimpleImmutableEntry<>("knit/sweater(slit)", "니트/스웨터(슬릿)"),
             new SimpleImmutableEntry<>("knit/sweater", "니트/스웨터"),
 
-            new SimpleImmutableEntry<>("short-sleeve T-shirt(graphic)", "반소매 티셔츠(그래픽)"),
-            new SimpleImmutableEntry<>("short-sleeve T-shirt(logo/lettering)", "반소매 티셔츠(로고/레터링)"),
-            new SimpleImmutableEntry<>("short-sleeve T-shirt(plain)", "반소매 티셔츠(무지)"),
-            new SimpleImmutableEntry<>("short-sleeve T-shirt(cropped)", "반소매 티셔츠(크롭)"),
-            new SimpleImmutableEntry<>("short-sleeve T-shirt(overfit)", "반소매 티셔츠(오버핏)"),
-            new SimpleImmutableEntry<>("short-sleeve T-shirt(embroidery)", "반소매 티셔츠(자수)"),
-            new SimpleImmutableEntry<>("short-sleeve T-shirt", "반소매 티셔츠"),
+            new SimpleImmutableEntry<>("short-sleeve t-shirt(graphic)", "반소매 티셔츠(그래픽)"),
+            new SimpleImmutableEntry<>("short-sleeve t-shirt(logo/lettering)", "반소매 티셔츠(로고/레터링)"),
+            new SimpleImmutableEntry<>("short-sleeve t-shirt(plain)", "반소매 티셔츠(무지)"),
+            new SimpleImmutableEntry<>("short-sleeve t-shirt(cropped)", "반소매 티셔츠(크롭)"),
+            new SimpleImmutableEntry<>("short-sleeve t-shirt(overfit)", "반소매 티셔츠(오버핏)"),
+            new SimpleImmutableEntry<>("short-sleeve t-shirt(embroidery)", "반소매 티셔츠(자수)"),
+            new SimpleImmutableEntry<>("short-sleeve t-shirt", "반소매 티셔츠"),
 
             new SimpleImmutableEntry<>("sweatshirt(cropped)", "맨투맨/스웨트셔츠(크롭)"),
             new SimpleImmutableEntry<>("sweatshirt(overfit)", "맨투맨/스웨트셔츠(오버핏)"),
@@ -65,14 +65,14 @@ public class TranslationUtil {
             new SimpleImmutableEntry<>("other tops(embroidery)", "기타상의(자수)"),
             new SimpleImmutableEntry<>("other tops", "기타상의"),
 
-            new SimpleImmutableEntry<>("pique/collar T-shirt", "피케/카라 티셔츠"),
+            new SimpleImmutableEntry<>("pique/collar t-shirt", "피케/카라 티셔츠"),
 
-            new SimpleImmutableEntry<>("hooded T-shirt(logo)", "후드 티셔츠(로고)"),
-            new SimpleImmutableEntry<>("hooded T-shirt(graphic)", "후드 티셔츠(그래픽)"),
-            new SimpleImmutableEntry<>("hooded T-shirt(basic)", "후드 티셔츠(베이식)"),
-            new SimpleImmutableEntry<>("hooded T-shirt(half zip-up)", "후드 티셔츠(하프집업)"),
-            new SimpleImmutableEntry<>("hooded T-shirt(cropped)", "후드 티셔츠(크롭)"),
-            new SimpleImmutableEntry<>("hooded T-shirt", "후드 티셔츠"),
+            new SimpleImmutableEntry<>("hooded t-shirt(logo)", "후드 티셔츠(로고)"),
+            new SimpleImmutableEntry<>("hooded t-shirt(graphic)", "후드 티셔츠(그래픽)"),
+            new SimpleImmutableEntry<>("hooded t-shirt(basic)", "후드 티셔츠(베이식)"),
+            new SimpleImmutableEntry<>("hooded t-shirt(half zip-up)", "후드 티셔츠(하프집업)"),
+            new SimpleImmutableEntry<>("hooded t-shirt(cropped)", "후드 티셔츠(크롭)"),
+            new SimpleImmutableEntry<>("hooded t-shirt", "후드 티셔츠"),
 
             new SimpleImmutableEntry<>("sports top", "스포츠상의"),
 
