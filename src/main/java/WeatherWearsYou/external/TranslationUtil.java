@@ -15,12 +15,18 @@ public class TranslationUtil {
             new SimpleImmutableEntry<>("shirts/blouse", "셔츠/블라우스"),
 
 
-            new SimpleImmutableEntry<>("long-sleeve t-shirts(cropped)", "긴소매 티셔츠(크롭)"),
-            new SimpleImmutableEntry<>("long-sleeve t-shirts(overfit)", "긴소매 티셔츠(오버핏)"),
-            new SimpleImmutableEntry<>("long-sleeve t-shirts(raglan)", "긴소매 티셔츠(래글런)"),
-            new SimpleImmutableEntry<>("long-sleeve t-shirts(tencel)", "긴소매 티셔츠(텐셀)"),
-            new SimpleImmutableEntry<>("long-sleeve t-shirts(relaxed)", "긴소매 티셔츠(릴렉스드)"),
-            new SimpleImmutableEntry<>("long-sleeve t-shirts", "긴소매 티셔츠"),
+//            new SimpleImmutableEntry<>("long-sleeve t-shirts(cropped)", "긴소매 티셔츠(크롭)"),
+//            new SimpleImmutableEntry<>("long-sleeve t-shirts(overfit)", "긴소매 티셔츠(오버핏)"),
+//            new SimpleImmutableEntry<>("long-sleeve t-shirts(raglan)", "긴소매 티셔츠(래글런)"),
+//            new SimpleImmutableEntry<>("long-sleeve t-shirts(tencel)", "긴소매 티셔츠(텐셀)"),
+//            new SimpleImmutableEntry<>("long-sleeve t-shirts(relaxed)", "긴소매 티셔츠(릴렉스드)"),
+//            new SimpleImmutableEntry<>("long-sleeve t-shirts", "긴소매 티셔츠"),
+            new SimpleImmutableEntry<>("long-sleeve t-shirt(cropped)", "긴소매 티셔츠(크롭)"),
+            new SimpleImmutableEntry<>("long-sleeve t-shirt(overfit)", "긴소매 티셔츠(오버핏)"),
+            new SimpleImmutableEntry<>("long-sleeve t-shirt(raglan)", "긴소매 티셔츠(래글런)"),
+            new SimpleImmutableEntry<>("long-sleeve t-shirt(tencel)", "긴소매 티셔츠(텐셀)"),
+            new SimpleImmutableEntry<>("long-sleeve t-shirt(relaxed)", "긴소매 티셔츠(릴렉스드)"),
+            new SimpleImmutableEntry<>("long-sleeve t-shirt", "긴소매 티셔츠"),
 
             new SimpleImmutableEntry<>("knit/sweater(half zip-up knit)", "니트/스웨터(하프집업니트)"),
             new SimpleImmutableEntry<>("knit/sweater(collar knit)", "니트/스웨터(카라니트)"),
@@ -299,7 +305,7 @@ public class TranslationUtil {
             new SimpleImmutableEntry<>("loafers(leather)", "로퍼(가죽)"),
             new SimpleImmutableEntry<>("loafers", "로퍼"),
 
-            new SimpleImmutableEntry<>("heels/pumps", "힐/펌프스"),
+            new SimpleImmutableEntry<>("heels and pumps", "힐/펌프스"),
 
             new SimpleImmutableEntry<>("flat shoes(mary jane)", "플랫 슈즈(메리제인)"),
             new SimpleImmutableEntry<>("flat shoes(summer shoes)", "플랫 슈즈(서머슈즈)"),

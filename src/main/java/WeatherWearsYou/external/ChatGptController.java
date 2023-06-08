@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 @CrossOrigin(origins = "http://localhost:5000")
 @RestController
 public class ChatGptController {
+    private static final int MAX_RETRIES = 10;
 
     @Autowired private ObjectMapper jsonMapper;
     @Autowired private OpenAiApiClient client;
@@ -45,13 +46,22 @@ public class ChatGptController {
     }
 
     private String chatWithGpt3(String[] message, String style) throws Exception {
-        var completion = CompletionRequest.defaultWith(message, style);
-        var postBodyJson = jsonMapper.writeValueAsString(completion);
-        var responseBody = client.postToOpenAiApi(postBodyJson, OpenAiService.GPT_3);
-        var completionResponse = jsonMapper.readValue(new String(responseBody, StandardCharsets.UTF_8), CompletionResponse.class);
-        return completionResponse.firstAnswer().orElseThrow();
+        for(int i = 0; i < MAX_RETRIES; i++) {
+            try {
+                var completion = CompletionRequest.defaultWith(message, style);
+                var postBodyJson = jsonMapper.writeValueAsString(completion);
+                var responseBody = client.postToOpenAiApi(postBodyJson, OpenAiService.GPT_3);
+                var completionResponse = jsonMapper.readValue(new String(responseBody, StandardCharsets.UTF_8), CompletionResponse.class);
+                return completionResponse.firstAnswer().orElseThrow();
+            } catch(Exception e) {
+                System.out.println("Error occurred: " + e.getMessage());
+                if (i == MAX_RETRIES - 1) {
+                    throw e; // re-throw the exception if on last retry
+                }
+            }
+        }
+        throw new Exception("Failed to get a response from the API after " + MAX_RETRIES + " attempts");
     }
-
 
     @PostMapping(path = "/")
     public ResponseEntity<byte[]> chat(@ModelAttribute FormInputDTO dto) {
@@ -99,7 +109,11 @@ public class ChatGptController {
                 String[] items = categories[i].substring(categories[i].indexOf(":") + 2).trim().split("#");
                 List<String> translatedItems = new ArrayList<>();
                 for (String item : items) {
-                    translatedItems.add(TranslationUtil.translateEngToKor(item));
+                    String translatedItem = TranslationUtil.translateEngToKor(item);
+
+                    if (!translatedItem.matches("[a-zA-Z ]+") || item != "") {
+                        translatedItems.add(translatedItem);
+                    }
                 }
                 results.put(categoriesKeys[i], translatedItems);
             }
