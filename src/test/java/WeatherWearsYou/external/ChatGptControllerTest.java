@@ -30,10 +30,10 @@ public class ChatGptControllerTest {
         FormInputDTO dto = new FormInputDTO();
         dto.setCity("gangwon");
         dto.setGender("female");
-        dto.setTargetDate("20230613");
+        dto.setTargetDate("20240113");
         dto.setStyle("girlish lovely"); // Set the style value
-        dto.setMaxTemp("27");
-        dto.setMinTemp("15");
+        dto.setMaxTemp("-15");
+        dto.setMinTemp("-30");
         dto.setPrecipitationRate("30");
         dto.setWeather("blurry");
         ResponseEntity<byte[]> response = chatGptController.chat(dto);
