@@ -128,19 +128,19 @@ public record CompletionRequest(String model, String prompt, double temperature,
         String prompt = String.format(
                 "The available options for itemtypes for each category are the following. I want you to parse through all options and choose the items that follow all instructions simultaneously.\n" +
                         "%s"+
-                        "The response must be a list seperated by '#', with no additional notes. " +
+                        "The response must be a list separated by '#', with no additional notes. " +
                         "\nThe response format is the following.\n\n" +
                         "Top:#[Top_Item1]#[Top_Item2]#[Top_Item3]\n" +
                         "Bottom:#[Bottom_Item1]#[Bottom_Item2]#[Bottom_Item3]\n" +
                         "Outer:#[Outer_Item1]#[Outer_Item2]#[Outer_Item3]\n" +
                         "Shoes:#[Shoes_Item1]#[Shoes_Item2]#[Shoes_Item3]\n\n " +
-                        "Choose the 3 itemtypes from each categories to generate a recommendation for %s, " +
-                        "that best fits %s in the weather on %s with probability of precipitation %s%%, %s weather, lowest temperature %s degree celsius and highest temperature %s degree celsius. " +
+                        "Choose the 3 itemtypes from each categories to generate a recommendation for %s %s, " +
+                        "that is wearable on %s with probability of precipitation %s%%, %s weather, lowest temperature %s degree celsius and highest temperature %s degree celsius. " +
                         "(If the chosen itemtype has an additional keyword in the brackets behind the itemtype, it is optional to choose one of them with the itemtype.)" +
                         " In the response, the additional keyword should be placed behind each itemtype inside the brackets. " +
                         "Just give me the list of items without the additional notes or apologies.",
 
-                randomOrder, words[0], styleText, words[1], words[2], words[4], words[5], words[3]);
+                randomOrder, styleText, words[0], words[1], words[2], words[3], words[4], words[5]);
         System.out.println(prompt);
         return new CompletionRequest("text-davinci-003", prompt, 0.7, 500);
     }

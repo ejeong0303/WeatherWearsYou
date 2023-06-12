@@ -118,8 +118,8 @@ public class ChatGptController {
                 results.put(categoriesKeys[i], translatedItems);
             }
 
-            // Remove 'Outer' if max temperature is >= 26
-            if (maxTemp != null && Double.parseDouble(maxTemp) >= 26) {
+            // Remove 'Outer' if max temperature is >= 10
+            if (maxTemp != null && Double.parseDouble(maxTemp) >= 10) {
                 results.remove("Outer");
             }
 
