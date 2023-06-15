@@ -65,7 +65,7 @@ public record CompletionRequest(String model, String prompt, double temperature,
         sMap.put("기타 스니커즈", null);
         sMap.put("캔버스/단화", null);
         sMap.put("샌들", Arrays.asList("서머슈즈", "플랫폼", "스포츠", "웨지힐", "벨크로", "뮬", "버클", "스트랩", "레더", "플립플랍"));
-        sMap.put("로퍼", Arrays.asList("서머슈즈, 베이식, 테슬, 캐주얼, 슬립온, 블로퍼, 드라이빙, 스웨이드, 페니, 가죽"));
+        sMap.put("로퍼", Arrays.asList("서머슈즈", "베이식", "테슬", "캐주얼", "슬립온", "블로퍼", "드라이빙", "스웨이드", "페니", "가죽"));
         //sMap.put("힐/펌프스",null);
         sMap.put("플랫 슈즈", Arrays.asList("메리제인", "서머슈즈", "뮬", "리본", "슬링백", "스퀘어토", "가죽"));
         sMap.put("블로퍼", null);
